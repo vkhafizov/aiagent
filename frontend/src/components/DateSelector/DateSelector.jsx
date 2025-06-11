@@ -3,7 +3,15 @@ import { Calendar } from 'lucide-react';
 import { TEXT } from '../../constants/text';
 import styles from './DateSelector.module.css';
 
-const DateSelector = ({ selectedDate, selectedTimePeriod, onDateChange }) => {
+const DateSelector = ({ 
+  selectedDate, 
+  selectedTimePeriod, 
+  onDateChange, 
+  onGenerate, 
+  loading, 
+  backendStatus, 
+  generateButtonText 
+}) => {
   const handleDateChange = (e) => {
     onDateChange(e.target.value, selectedTimePeriod);
   };
@@ -47,6 +55,20 @@ const DateSelector = ({ selectedDate, selectedTimePeriod, onDateChange }) => {
               </option>
             ))}
           </select>
+        </div>
+
+        {/* GENERATE BUTTON MOVED HERE */}
+        <div className={styles.field}>
+          <button
+            onClick={onGenerate}
+            disabled={loading || backendStatus !== 'connected'}
+            className={`${styles.generateButton} ${loading ? styles.loading : ''} ${backendStatus !== 'connected' ? styles.disabled : ''}`}
+          >
+            {loading ? '⏳ ' + generateButtonText : '🚀 ' + generateButtonText}
+          </button>
+          <p className={styles.repositoryInfo}>
+            Repository: QuantumFusion-network/qf-polkavm-sdk
+          </p>
         </div>
       </div>
     </div>
