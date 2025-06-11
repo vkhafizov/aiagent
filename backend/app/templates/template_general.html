@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.post {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.timestamp {
+  color: #6e767d;
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.content {
+  color: #2f3336;
+  line-height: 1.5;
+}
+
+.update-banner {
+  background: linear-gradient(135deg, #0366d6 0%, #2ea44f 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.update-banner::before {
+  content: "🚀";
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  opacity: 0.3;
+}
+
+.update-banner h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+}
+
+.update-banner p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.highlight-card {
+  background: #f6f8fa;
+  border: 1px solid #d1d9e0;
+  border-radius: 8px;
+  padding: 15px;
+  transition: all 0.3s ease;
+}
+
+.highlight-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.highlight-card h4 {
+  color: #24292f;
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.highlight-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #656d76;
+  line-height: 1.4;
+}
+
+.card-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.icon-feature { background: #dbeafe; }
+.icon-bugfix { background: #dcfce7; }
+.icon-security { background: #f3e8ff; }
+.icon-performance { background: #fef3c7; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.stat-box {
+  background: #f7f9fa;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0366d6;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #586069;
+  margin-top: 5px;
+}
+
+.diff {
+  background: #f6f8fa;
+  padding: 15px;
+  border-radius: 6px;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  margin: 10px 0;
+}
+
+.diff-added {
+  background: #e6ffec;
+  padding: 2px 0;
+  color: #28a745;
+}
+
+.diff-removed {
+  background: #ffebe9;
+  padding: 2px 0;
+  color: #d73a49;
+}
+
+.file-tree {
+  font-family: monospace;
+  margin: 10px 0;
+  padding: 10px;
+  background: #f6f8fa;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.file-tree .folder {
+  color: #0366d6;
+  font-weight: 600;
+}
+
+.file-tree .file {
+  color: #586069;
+  margin-left: 20px;
+}
+
+.progress-section {
+  margin: 20px 0;
+}
+
+.progress-section h4 {
+  color: #24292f;
+  margin-bottom: 15px;
+}
+
+.progress-item {
+  margin-bottom: 12px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.progress-bar {
+  width: 100%;
+  background: #ebeef0;
+  border-radius: 10px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.progress {
+  background: linear-gradient(90deg, #0366d6, #2ea44f);
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.activity-timeline {
+  background: #f6f8fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 0;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0366d6;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+  font-size: 14px;
+  color: #24292f;
+}
+
+.timeline-time {
+  font-size: 12px;
+  color: #656d76;
+  margin-left: auto;
+}
+
+.code-preview {
+  background: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 15px 0;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  overflow-x: auto;
+}
+
+.code-preview .code-header {
+  color: #586069;
+  font-size: 12px;
+  margin-bottom: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.code-preview code {
+  color: #24292f;
+  white-space: pre;
+}
+
+.contributor-list {
+  display: flex;
+  gap: 8px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.contributor {
+  display: flex;
+  align-items: center;
+  background: #f6f8fa;
+  padding: 6px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  gap: 6px;
+}
+
+.contributor-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #0366d6;
+}
+
+.tag {
+  background: #0366d61a;
+  color: #0366d6;
+  padding: 3px 8px;
+  border-radius: 15px;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.engagement {
+  display: flex;
+  gap: 20px;
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: 1px solid #ebeef0;
+}
+
+.engagement-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #536471;
+  font-size: 14px;
+}
+
+.summary-box {
+  background: linear-gradient(135deg, #f6f8fa, #ffffff);
+  border: 1px solid #d1d9e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.summary-box h4 {
+  margin: 0 0 10px 0;
+  color: #24292f;
+}
+
+.benefits-list {
+  margin: 15px 0;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.benefit-item::before {
+  content: "✓";
+  color: #28a745;
+  font-weight: bold;
+  margin-right: 8px;
+  margin-top: 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="post">
+  <div class="post-header">
+    <img src="{{ avatar_url }}" class="avatar">
+    <div>
+      <span class="username">{{ username }}</span>
+      <span class="timestamp">{{ timeago }}</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="update-banner">
+      <h3>{{ content.title }}</h3>
+      <p>{{ content.summary }}</p>
+    </div>
+
+    <div class="summary-box">
+      <h4>📋 Development Summary</h4>
+      <p>{{ content.detailed_explanation }}</p>
+    </div>
+
+    {% if content.technical_highlights %}
+    <div class="highlights-grid">
+      {% for highlight in content.technical_highlights %}
+      <div class="highlight-card">
+        <h4>
+          <div class="card-icon icon-feature">💻</div>
+          Technical Update
+        </h4>
+        <p>{{ highlight }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-number">{{ metrics.total_commits }}</div>
+        <div class="stat-label">Commits</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ metrics.lines_added | format_number }}</div>
+        <div class="stat-label">Lines Added</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ metrics.files_changed }}</div>
+        <div class="stat-label">Files Changed</div>
+      </div>
+    </div>
+
+    {% if diff_content %}
+    <div class="diff">
+      <strong>📝 Key Changes:</strong><br>
+      {% for diff in diff_content %}
+      <div class="diff-{{ diff.type }}">{{ '+' if diff.type == 'added' else '-' }} {{ diff.content }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if content.user_benefits %}
+    <div class="benefits-list">
+      <h4>🎯 Benefits for Users</h4>
+      {% for benefit in content.user_benefits %}
+      <div class="benefit-item">{{ benefit }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if content.code_snippets %}
+    {% for snippet in content.code_snippets %}
+    <div class="code-preview">
+      <div class="code-header">📄 {{ snippet.description }} ({{ snippet.language }})</div>
+      <code>{{ snippet.code }}</code>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if progress_bars %}
+    <div class="progress-section">
+      <h4>📊 Development Progress</h4>
+      {% for progress in progress_bars %}
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>{{ progress.label }}</span>
+          <span>{{ progress.percentage }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" style="width: {{ progress.percentage }}%"></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="activity-timeline">
+      <h4 style="margin-top: 0; color: #24292f;">🕒 Recent Activity</h4>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">{{ metrics.total_commits }} commits pushed</div>
+        <div class="timeline-time">{{ timeago }}</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">{{ metrics.files_changed }} files updated</div>
+        <div class="timeline-time">{{ time_period }} period</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">{{ metrics.contributors }} contributors active</div>
+        <div class="timeline-time">Active now</div>
+      </div>
+    </div>
+
+    {% if charts %}
+    {% for chart_html in charts %}
+    {{ chart_html | safe }}
+    {% endfor %}
+    {% endif %}
+
+    <div>
+      {% for tag in content.tags %}
+      <span class="tag">#{{ tag }}</span>
+      {% endfor %}
+      {% for hashtag in content.hashtags %}
+      <span class="tag">{{ hashtag }}</span>
+      {% endfor %}
+    </div>
+
+    <div class="engagement">
+      <div class="engagement-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        {{ engagement.likes }}
+      </div>
+      <div class="engagement-item">  
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z"/>
+        </svg>
+        {{ engagement.comments }}
+      </div>
+      <div class="engagement-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.77 15.67c-.292-.293-.767-.293-1.06 0l-2.22 2.22V7.65c0-2.068-1.683-3.75-3.75-3.75h-5.85c-.414 0-.75.336-.75.75s.336.75.75.75h5.85c1.24 0 2.25 1.01 2.25 2.25v10.24l-2.22-2.22c-.293-.293-.768-.293-1.06 0s-.294.768 0 1.06l3.5 3.5c.145.147.337.22.53.22s.383-.072.53-.22l3.5-3.5c.294-.292.294-.767 0-1.06zm-10.66 3.28H7.26c-1.24 0-2.25-1.01-2.25-2.25V6.46l2.22 2.22c.148.147.34.22.532.22s.384-.073.53-.22c.293-.293.293-.768 0-1.06l-3.5-3.5c-.293-.294-.768-.294-1.06 0l-3.5 3.5c-.294.292-.294.767 0 1.06s.767.293 1.06 0l2.22-2.22V16.7c0 2.068 1.683 3.75 3.75 3.75h5.85c.414 0 .75-.336.75-.75s-.337-.75-.75-.75z"/>
+        </svg>
+        {{ engagement.shares }}
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

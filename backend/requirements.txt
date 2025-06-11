@@ -1,0 +1,32 @@
+# Core web framework
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# HTTP requests and environment
+requests==2.31.0
+python-dotenv==1.0.0
+
+# Data validation and models
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# AI and GitHub integrations
+anthropic==0.7.7
+pygithub==2.1.1
+
+# Template engine
+jinja2==3.1.2
+
+# Data processing and visualization
+matplotlib==3.8.2
+pandas==2.1.4
+numpy==1.25.2
+
+# Task scheduling
+schedule==1.2.0
+
+# File handling
+aiofiles==23.2.0
+
+# HTTP client
+python-multipart==0.0.6

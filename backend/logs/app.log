@@ -1,0 +1,493 @@
+2025-06-10 12:49:11,123 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-10 12:49:11,270 - scheduler - INFO - Initializing GitHub commit scheduler
+2025-06-10 12:49:11,476 - scheduler - INFO - Starting GitHub commit scheduler
+2025-06-10 12:49:11,476 - scheduler - INFO - Scheduler started. Monitoring 3 repositories:
+2025-06-10 12:49:11,477 - scheduler - INFO -   - QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 12:49:11,477 - scheduler - INFO -   - QuantumFusion-network/qf-solochain
+2025-06-10 12:49:11,478 - scheduler - INFO -   - QuantumFusion-network/apps
+2025-06-10 12:49:11,478 - scheduler - INFO - IMPORTANT: Posts are generated ON-DEMAND via API calls
+2025-06-10 12:49:11,478 - scheduler - INFO - Scheduler only collects commits automatically every hour
+2025-06-10 12:49:11,480 - scheduler - INFO - Running initial commit collection...
+2025-06-10 12:49:11,480 - scheduler - INFO - Starting hourly commit collection
+2025-06-10 12:49:11,481 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 12:49:11,687 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 5000, 'reset': datetime.datetime(2025, 6, 10, 10, 49, 10, tzinfo=datetime.timezone.utc)}}
+2025-06-10 12:49:12,121 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 11:49:11.481351 and 2025-06-10 12:49:11.481351
+2025-06-10 12:49:12,939 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 12:49:12,942 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 12:49:12,943 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-solochain
+2025-06-10 12:49:13,489 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 12:49:13,512 - app.main - INFO - Claude API connected: True
+2025-06-10 12:49:13,784 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-solochain between 2025-06-10 11:49:12.943557 and 2025-06-10 12:49:12.943557
+2025-06-10 12:49:14,616 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-solochain
+2025-06-10 12:49:14,617 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-solochain
+2025-06-10 12:49:14,617 - scheduler - INFO - Collecting commits from QuantumFusion-network/apps
+2025-06-10 12:49:15,658 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/apps between 2025-06-10 11:49:14.618349 and 2025-06-10 12:49:14.618349
+2025-06-10 12:49:16,511 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/apps
+2025-06-10 12:49:16,512 - scheduler - INFO - No new commits found in QuantumFusion-network/apps
+2025-06-10 12:49:16,512 - scheduler - INFO - Hourly collection completed. Success: 3, Failed: 0
+2025-06-10 12:50:08,613 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 12:51:39,660 - app.main - INFO - Generating post for QuantumFusion-network/qf-polkavm-sdk (24h)
+2025-06-10 12:51:40,373 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-09 12:51:39.661408 and 2025-06-10 12:51:39.661408
+2025-06-10 12:51:41,194 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 12:56:37,507 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-10 12:56:38,137 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 4992, 'reset': datetime.datetime(2025, 6, 10, 10, 49, 11, tzinfo=datetime.timezone.utc)}}
+2025-06-10 12:56:39,972 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 12:56:39,982 - app.main - INFO - Claude API connected: True
+2025-06-10 12:56:48,090 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-10 12:56:48,692 - scheduler - INFO - Initializing GitHub commit scheduler
+2025-06-10 12:56:48,693 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 4992, 'reset': datetime.datetime(2025, 6, 10, 10, 49, 11, tzinfo=datetime.timezone.utc)}}
+2025-06-10 12:56:48,937 - scheduler - INFO - Starting GitHub commit scheduler
+2025-06-10 12:56:48,937 - scheduler - INFO - Scheduler started. Monitoring 3 repositories:
+2025-06-10 12:56:48,938 - scheduler - INFO -   - QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 12:56:48,938 - scheduler - INFO -   - QuantumFusion-network/qf-solochain
+2025-06-10 12:56:48,938 - scheduler - INFO -   - QuantumFusion-network/apps
+2025-06-10 12:56:48,938 - scheduler - INFO - IMPORTANT: Posts are generated ON-DEMAND via API calls
+2025-06-10 12:56:48,938 - scheduler - INFO - Scheduler only collects commits automatically every hour
+2025-06-10 12:56:48,938 - scheduler - INFO - Running initial commit collection...
+2025-06-10 12:56:48,939 - scheduler - INFO - Starting hourly commit collection
+2025-06-10 12:56:48,939 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 12:56:49,513 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 11:56:48.939511 and 2025-06-10 12:56:48.939511
+2025-06-10 12:56:50,403 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 12:56:50,404 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 12:56:50,405 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-solochain
+2025-06-10 12:56:50,417 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 12:56:50,426 - app.main - INFO - Claude API connected: True
+2025-06-10 12:56:51,290 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-solochain between 2025-06-10 11:56:50.405353 and 2025-06-10 12:56:50.405353
+2025-06-10 12:56:52,080 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-solochain
+2025-06-10 12:56:52,081 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-solochain
+2025-06-10 12:56:52,082 - scheduler - INFO - Collecting commits from QuantumFusion-network/apps
+2025-06-10 12:56:53,000 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/apps between 2025-06-10 11:56:52.082813 and 2025-06-10 12:56:52.082813
+2025-06-10 12:56:53,891 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/apps
+2025-06-10 12:56:53,892 - scheduler - INFO - No new commits found in QuantumFusion-network/apps
+2025-06-10 12:56:53,892 - scheduler - INFO - Hourly collection completed. Success: 3, Failed: 0
+2025-06-10 12:57:12,741 - app.main - INFO - Generating post for facebook/react (24h)
+2025-06-10 12:57:13,526 - app.core.github_collector - INFO - Fetching commits from facebook/react between 2025-06-09 12:57:12.741429 and 2025-06-10 12:57:12.741429
+2025-06-10 12:57:16,981 - app.core.github_collector - ERROR - Error processing commit c38e26897848374c34ac6b651fce4a9088ed4dd0: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:18,762 - app.core.github_collector - ERROR - Error processing commit 80c03eb7e0f05da5e0de6faebbe8dbb434455454: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:20,531 - app.core.github_collector - ERROR - Error processing commit b6c0aa88140bba2a61c1de16bda2505c89b26235: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:23,256 - app.core.github_collector - ERROR - Error processing commit 428ab8200128d9421828dbe644c3448d21ea8c45: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:24,989 - app.core.github_collector - ERROR - Error processing commit 4df098c4c2c51a033592ebc84abc47cc49a6bfb2: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:24,990 - app.core.github_collector - INFO - Successfully fetched 0 commits from facebook/react
+2025-06-10 12:57:32,803 - app.main - INFO - Generating post for facebook/react (48h)
+2025-06-10 12:57:33,531 - app.core.github_collector - INFO - Fetching commits from facebook/react between 2025-06-08 12:57:32.804329 and 2025-06-10 12:57:32.804329
+2025-06-10 12:57:37,036 - app.core.github_collector - ERROR - Error processing commit c38e26897848374c34ac6b651fce4a9088ed4dd0: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:38,788 - app.core.github_collector - ERROR - Error processing commit 80c03eb7e0f05da5e0de6faebbe8dbb434455454: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:40,543 - app.core.github_collector - ERROR - Error processing commit b6c0aa88140bba2a61c1de16bda2505c89b26235: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:43,087 - app.core.github_collector - ERROR - Error processing commit 428ab8200128d9421828dbe644c3448d21ea8c45: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:44,848 - app.core.github_collector - ERROR - Error processing commit 4df098c4c2c51a033592ebc84abc47cc49a6bfb2: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:46,711 - app.core.github_collector - ERROR - Error processing commit 95bcf87e6b29f4efee26d0a79cbdc84776180cce: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:48,617 - app.core.github_collector - ERROR - Error processing commit 911dbd9e34048b21e96f24acb837b926687aa939: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 12:57:48,617 - app.core.github_collector - INFO - Successfully fetched 0 commits from facebook/react
+2025-06-10 13:00:41,566 - app.main - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk for last 24 hours
+2025-06-10 13:00:42,276 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-09 13:00:41.566569 and 2025-06-10 13:00:41.566569
+2025-06-10 13:00:43,127 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:00:43,129 - app.core.github_collector - INFO - Saved 0 commits to ./data/commits\hourly\QuantumFusion-network_qf-polkavm-sdk_24h_20250610_130043.json
+2025-06-10 13:00:53,895 - scheduler - INFO - Starting hourly commit collection
+2025-06-10 13:00:53,896 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:00:54,551 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 12:00:53.896603 and 2025-06-10 13:00:53.896603
+2025-06-10 13:00:55,359 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:00:55,359 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:00:55,360 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:00:56,230 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-solochain between 2025-06-10 12:00:55.361046 and 2025-06-10 13:00:55.361046
+2025-06-10 13:00:57,142 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:00:57,142 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-solochain
+2025-06-10 13:00:57,143 - scheduler - INFO - Collecting commits from QuantumFusion-network/apps
+2025-06-10 13:00:58,062 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/apps between 2025-06-10 12:00:57.143963 and 2025-06-10 13:00:57.143963
+2025-06-10 13:00:58,989 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/apps
+2025-06-10 13:00:58,989 - scheduler - INFO - No new commits found in QuantumFusion-network/apps
+2025-06-10 13:00:58,989 - scheduler - INFO - Hourly collection completed. Success: 3, Failed: 0
+2025-06-10 13:04:14,035 - app.main - INFO - Collecting commits from QuantumFusion-network/qf-solochain for last 24 hours
+2025-06-10 13:04:14,773 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-solochain between 2025-06-09 13:04:14.036291 and 2025-06-10 13:04:14.036291
+2025-06-10 13:04:15,653 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:04:15,656 - app.core.github_collector - INFO - Saved 0 commits to ./data/commits\hourly\QuantumFusion-network_qf-solochain_24h_20250610_130415.json
+2025-06-10 13:04:28,312 - app.main - INFO - Collecting commits from QuantumFusion-network/apps for last 24 hours
+2025-06-10 13:04:29,129 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/apps between 2025-06-09 13:04:28.313126 and 2025-06-10 13:04:28.313126
+2025-06-10 13:04:30,051 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/apps
+2025-06-10 13:04:30,058 - app.core.github_collector - INFO - Saved 0 commits to ./data/commits\hourly\QuantumFusion-network_apps_24h_20250610_130430.json
+2025-06-10 13:08:56,646 - app.main - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk for last 96 hours
+2025-06-10 13:08:57,333 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-06 13:08:56.646834 and 2025-06-10 13:08:56.646834
+2025-06-10 13:08:58,221 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:08:58,224 - app.core.github_collector - INFO - Saved 0 commits to ./data/commits\hourly\QuantumFusion-network_qf-polkavm-sdk_96h_20250610_130858.json
+2025-06-10 13:12:58,551 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-10 13:12:59,100 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 4940, 'reset': datetime.datetime(2025, 6, 10, 10, 49, 11, tzinfo=datetime.timezone.utc)}}
+2025-06-10 13:13:01,417 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 13:13:01,425 - app.main - INFO - Claude API connected: True
+2025-06-10 13:13:05,909 - app.main - INFO - Collecting commits from facebook/react for last 24 hours
+2025-06-10 13:13:06,619 - app.core.github_collector - INFO - Fetching commits from facebook/react between 2025-06-09 13:13:05.909753 and 2025-06-10 13:13:05.909753
+2025-06-10 13:13:10,065 - app.core.github_collector - ERROR - Error processing commit c38e26897848374c34ac6b651fce4a9088ed4dd0: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:13:11,821 - app.core.github_collector - ERROR - Error processing commit 80c03eb7e0f05da5e0de6faebbe8dbb434455454: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:13:13,456 - app.core.github_collector - ERROR - Error processing commit b6c0aa88140bba2a61c1de16bda2505c89b26235: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:13:15,920 - app.core.github_collector - ERROR - Error processing commit 428ab8200128d9421828dbe644c3448d21ea8c45: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:13:17,536 - app.core.github_collector - ERROR - Error processing commit 4df098c4c2c51a033592ebc84abc47cc49a6bfb2: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:13:17,536 - app.core.github_collector - INFO - Successfully fetched 0 commits from facebook/react
+2025-06-10 13:13:17,539 - app.core.github_collector - INFO - Saved 0 commits to ./data/commits\hourly\facebook_react_24h_20250610_131317.json
+2025-06-10 13:13:17,543 - app.main - INFO - Collecting commits from facebook/react for last 24 hours
+2025-06-10 13:13:18,461 - app.core.github_collector - INFO - Fetching commits from facebook/react between 2025-06-09 13:13:17.544414 and 2025-06-10 13:13:17.544414
+2025-06-10 13:13:22,033 - app.core.github_collector - ERROR - Error processing commit c38e26897848374c34ac6b651fce4a9088ed4dd0: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:13:23,689 - app.core.github_collector - ERROR - Error processing commit 80c03eb7e0f05da5e0de6faebbe8dbb434455454: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:13:25,486 - app.core.github_collector - ERROR - Error processing commit b6c0aa88140bba2a61c1de16bda2505c89b26235: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:13:27,978 - app.core.github_collector - ERROR - Error processing commit 428ab8200128d9421828dbe644c3448d21ea8c45: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:13:29,695 - app.core.github_collector - ERROR - Error processing commit 4df098c4c2c51a033592ebc84abc47cc49a6bfb2: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:13:29,696 - app.core.github_collector - INFO - Successfully fetched 0 commits from facebook/react
+2025-06-10 13:13:29,698 - app.core.github_collector - INFO - Saved 0 commits to ./data/commits\hourly\facebook_react_24h_20250610_131329.json
+2025-06-10 13:14:12,368 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-10 13:14:12,822 - scheduler - INFO - Initializing GitHub commit scheduler
+2025-06-10 13:14:12,946 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 4912, 'reset': datetime.datetime(2025, 6, 10, 10, 49, 11, tzinfo=datetime.timezone.utc)}}
+2025-06-10 13:14:13,046 - scheduler - INFO - Starting GitHub commit scheduler
+2025-06-10 13:14:13,046 - scheduler - INFO - Scheduler started. Monitoring 3 repositories:
+2025-06-10 13:14:13,047 - scheduler - INFO -   - QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:14:13,047 - scheduler - INFO -   - QuantumFusion-network/qf-solochain
+2025-06-10 13:14:13,047 - scheduler - INFO -   - QuantumFusion-network/apps
+2025-06-10 13:14:13,047 - scheduler - INFO - IMPORTANT: Posts are generated ON-DEMAND via API calls
+2025-06-10 13:14:13,047 - scheduler - INFO - Scheduler only collects commits automatically every hour
+2025-06-10 13:14:13,048 - scheduler - INFO - Running initial commit collection...
+2025-06-10 13:14:13,048 - scheduler - INFO - Starting hourly commit collection
+2025-06-10 13:14:13,048 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:14:13,693 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 12:14:13.048604 and 2025-06-10 13:14:13.048604
+2025-06-10 13:14:14,540 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:14:14,541 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:14:14,542 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:14:14,781 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 13:14:14,790 - app.main - INFO - Claude API connected: True
+2025-06-10 13:14:15,397 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-solochain between 2025-06-10 12:14:14.542812 and 2025-06-10 13:14:14.542812
+2025-06-10 13:14:16,203 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:14:16,204 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-solochain
+2025-06-10 13:14:16,205 - scheduler - INFO - Collecting commits from QuantumFusion-network/apps
+2025-06-10 13:14:17,179 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/apps between 2025-06-10 12:14:16.205436 and 2025-06-10 13:14:16.205436
+2025-06-10 13:14:18,058 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/apps
+2025-06-10 13:14:18,059 - scheduler - INFO - No new commits found in QuantumFusion-network/apps
+2025-06-10 13:14:18,060 - scheduler - INFO - Hourly collection completed. Success: 3, Failed: 0
+2025-06-10 13:14:23,314 - app.main - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk for last 720 hours
+2025-06-10 13:14:23,966 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-05-11 13:14:23.315244 and 2025-06-10 13:14:23.315244
+2025-06-10 13:14:27,534 - app.core.github_collector - ERROR - Error processing commit 0a7f64ece658202bfbabe0f8aae9f945cb11749c: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:14:29,659 - app.core.github_collector - ERROR - Error processing commit 78f9995fddb97de7a6fde182ecbc0cc0bd805017: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:14:31,304 - app.core.github_collector - ERROR - Error processing commit f492bb85dcf23c92fc5ecbdf43e1428f27aaa3e0: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:14:33,020 - app.core.github_collector - ERROR - Error processing commit 8190ec66695976fac5a934fa5844ed667f7e869a: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:14:34,701 - app.core.github_collector - ERROR - Error processing commit adbb73906820f5b176798c4b1df0f115683ecd2c: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:14:36,356 - app.core.github_collector - ERROR - Error processing commit 48f7281b6a268d63e42e5e777dba29124b837472: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:14:38,818 - app.core.github_collector - ERROR - Error processing commit 8b3fe3af048600a0f7461f89492bd522364f69bc: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:14:45,554 - app.core.github_collector - ERROR - Error processing commit a118994327c5296db7ea97991c65523f48c8c539: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:14:57,940 - app.core.github_collector - ERROR - Error processing commit a65a24bf0165dba101377ab1b2c2a8514daaa772: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:14:59,579 - app.core.github_collector - ERROR - Error processing commit d5f1d992fe721e8599b9a44d8fa0996d0202b794: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:02,028 - app.core.github_collector - ERROR - Error processing commit 7b310798c22d490df09719c22fa232feecd3db05: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:03,660 - app.core.github_collector - ERROR - Error processing commit 86fd2ae0de63324b0e47be2d047f420fd1145f27: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:05,380 - app.core.github_collector - ERROR - Error processing commit 2f108aac840466b02e55ad5cecf04a2ac6829278: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:07,859 - app.core.github_collector - ERROR - Error processing commit 76075462fbf23e6228b4f510e00a626499c7d769: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:12,055 - app.core.github_collector - ERROR - Error processing commit ef01f0deeec7e41b7cbcbdc8e40760e2beeb62af: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:16,274 - app.core.github_collector - ERROR - Error processing commit 7a6075e5b39799b37716a67770aa0feb0dcbf898: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:18,034 - app.core.github_collector - ERROR - Error processing commit 2d97a909487239fdfedd240c597bfb06cd266f61: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:19,697 - app.core.github_collector - ERROR - Error processing commit 54da4ca987f36e8a081737fb10d988ef402c06ff: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:21,363 - app.core.github_collector - ERROR - Error processing commit c8c7741419fc6aa335030b440c486c50d98a6ef8: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:22,999 - app.core.github_collector - ERROR - Error processing commit 0f803c0b6f36d9d77940afb92aaa6092b8be5ac5: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:24,683 - app.core.github_collector - ERROR - Error processing commit 649bc4c9ed73b1d53e6e27054e668932f135e6d1: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:26,384 - app.core.github_collector - ERROR - Error processing commit baeb31b2f7f0c180e61ba5e62a7a7d993df35bb6: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:29,796 - app.core.github_collector - ERROR - Error processing commit 2f43067d922878d07bf9f12112054a62ff205144: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:34,780 - app.core.github_collector - ERROR - Error processing commit 288d4cf4eff5cfca59de0c7f6fdde2525ec976cf: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:39,683 - app.core.github_collector - ERROR - Error processing commit 9814dc976bfde7aa910fe29d3474c562f2e07d0b: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:44,781 - app.core.github_collector - ERROR - Error processing commit 7abc3d5560cd8fb3f03628e439c0fa1a01ca50e5: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:46,468 - app.core.github_collector - ERROR - Error processing commit 529c05d21ab4741c291f5ebc6c500ccafdf664b9: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:49,021 - app.core.github_collector - ERROR - Error processing commit a0f7e7728da711ce9d5249a7801298c3638dde95: 1 validation error for CommitAuthor
+email
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:50,657 - app.core.github_collector - ERROR - Error processing commit 909871d27012e1332de9c7028d2cf00f99e25aca: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:52,342 - app.core.github_collector - ERROR - Error processing commit f8ce06807fb10533589830448a682c2a539d5cf6: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:54,140 - app.core.github_collector - ERROR - Error processing commit ff4622359936bc88cc84396402302c0477e62c6b: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:55,863 - app.core.github_collector - ERROR - Error processing commit e52e203dd4d9b40443d81a0b8bdbce4e378987c1: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:57,577 - app.core.github_collector - ERROR - Error processing commit baec7aeb448956d21f7e9275ba969454677897ad: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:15:59,340 - app.core.github_collector - ERROR - Error processing commit 4e3a76a0b581b13d3cb7a94adf21b8e8277b44be: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:16:01,061 - app.core.github_collector - ERROR - Error processing commit b691e29cfa7f75b24762bde83ae01ea395fae91b: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:16:02,814 - app.core.github_collector - ERROR - Error processing commit e3ac86d2c215e5f1914a6e0a2ef70222d8036ce5: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:16:04,543 - app.core.github_collector - ERROR - Error processing commit 2f1f94df5461356d9f3cbd825b487c68668b08d2: 1 validation error for CommitAuthor
+name
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.9/v/string_type
+2025-06-10 13:16:04,550 - app.core.github_collector - INFO - Successfully fetched 11 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:16:04,559 - app.core.github_collector - ERROR - Error saving commits to file ./data/commits\hourly\QuantumFusion-network_qf-polkavm-sdk_720h_20250610_131604.json: fromisoformat: argument must be str
+2025-06-10 13:16:04,559 - app.main - ERROR - Error collecting commits: fromisoformat: argument must be str
+2025-06-10 13:18:18,792 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-10 13:18:19,368 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 4786, 'reset': datetime.datetime(2025, 6, 10, 10, 49, 11, tzinfo=datetime.timezone.utc)}}
+2025-06-10 13:18:21,744 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 13:18:21,754 - app.main - INFO - Claude API connected: True
+2025-06-10 13:18:35,522 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-10 13:18:35,984 - scheduler - INFO - Initializing GitHub commit scheduler
+2025-06-10 13:18:36,017 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 4786, 'reset': datetime.datetime(2025, 6, 10, 10, 49, 11, tzinfo=datetime.timezone.utc)}}
+2025-06-10 13:18:36,223 - scheduler - INFO - Starting GitHub commit scheduler
+2025-06-10 13:18:36,224 - scheduler - INFO - Scheduler started. Monitoring 3 repositories:
+2025-06-10 13:18:36,224 - scheduler - INFO -   - QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:18:36,225 - scheduler - INFO -   - QuantumFusion-network/qf-solochain
+2025-06-10 13:18:36,225 - scheduler - INFO -   - QuantumFusion-network/apps
+2025-06-10 13:18:36,225 - scheduler - INFO - IMPORTANT: Posts are generated ON-DEMAND via API calls
+2025-06-10 13:18:36,225 - scheduler - INFO - Scheduler only collects commits automatically every hour
+2025-06-10 13:18:36,226 - scheduler - INFO - Running initial commit collection...
+2025-06-10 13:18:36,226 - scheduler - INFO - Starting hourly commit collection
+2025-06-10 13:18:36,226 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:18:36,846 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 12:18:36.227112 and 2025-06-10 13:18:36.227112
+2025-06-10 13:18:37,685 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:18:37,686 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:18:37,686 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:18:37,765 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 13:18:37,776 - app.main - INFO - Claude API connected: True
+2025-06-10 13:18:38,620 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-solochain between 2025-06-10 12:18:37.687251 and 2025-06-10 13:18:37.687251
+2025-06-10 13:18:39,451 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:18:39,451 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-solochain
+2025-06-10 13:18:39,452 - scheduler - INFO - Collecting commits from QuantumFusion-network/apps
+2025-06-10 13:18:40,379 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/apps between 2025-06-10 12:18:39.453038 and 2025-06-10 13:18:39.453038
+2025-06-10 13:18:41,190 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/apps
+2025-06-10 13:18:41,191 - scheduler - INFO - No new commits found in QuantumFusion-network/apps
+2025-06-10 13:18:41,191 - scheduler - INFO - Hourly collection completed. Success: 3, Failed: 0
+2025-06-10 13:18:48,418 - app.main - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk for last 720 hours
+2025-06-10 13:18:49,098 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-05-11 13:18:48.418927 and 2025-06-10 13:18:48.418927
+2025-06-10 13:20:52,140 - app.core.github_collector - INFO - Successfully fetched 48 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:20:52,144 - app.core.github_collector - ERROR - Error saving commits to file ./data/commits\hourly\QuantumFusion-network_qf-polkavm-sdk_720h_20250610_132052.json: fromisoformat: argument must be str
+2025-06-10 13:20:52,144 - app.main - ERROR - Error collecting commits: fromisoformat: argument must be str
+2025-06-10 13:27:24,449 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-10 13:27:24,774 - scheduler - INFO - Initializing GitHub commit scheduler
+2025-06-10 13:27:24,981 - scheduler - INFO - Starting GitHub commit scheduler
+2025-06-10 13:27:24,982 - scheduler - INFO - Scheduler started. Monitoring 3 repositories:
+2025-06-10 13:27:24,982 - scheduler - INFO -   - QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:27:24,982 - scheduler - INFO -   - QuantumFusion-network/qf-solochain
+2025-06-10 13:27:24,982 - scheduler - INFO -   - QuantumFusion-network/apps
+2025-06-10 13:27:24,983 - scheduler - INFO - IMPORTANT: Posts are generated ON-DEMAND via API calls
+2025-06-10 13:27:24,983 - scheduler - INFO - Scheduler only collects commits automatically every hour
+2025-06-10 13:27:24,983 - scheduler - INFO - Running initial commit collection...
+2025-06-10 13:27:24,983 - scheduler - INFO - Starting hourly commit collection
+2025-06-10 13:27:24,984 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:27:24,990 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 4633, 'reset': datetime.datetime(2025, 6, 10, 10, 49, 11, tzinfo=datetime.timezone.utc)}}
+2025-06-10 13:27:25,662 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 12:27:24.984611 and 2025-06-10 13:27:24.984611
+2025-06-10 13:27:26,447 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:27:26,447 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:27:26,447 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:27:27,201 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 13:27:27,210 - app.main - INFO - Claude API connected: True
+2025-06-10 13:27:27,272 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-solochain between 2025-06-10 12:27:26.447898 and 2025-06-10 13:27:26.447898
+2025-06-10 13:27:28,106 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:27:28,107 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-solochain
+2025-06-10 13:27:28,107 - scheduler - INFO - Collecting commits from QuantumFusion-network/apps
+2025-06-10 13:27:29,077 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/apps between 2025-06-10 12:27:28.107755 and 2025-06-10 13:27:28.107755
+2025-06-10 13:27:29,948 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/apps
+2025-06-10 13:27:29,948 - scheduler - INFO - No new commits found in QuantumFusion-network/apps
+2025-06-10 13:27:29,949 - scheduler - INFO - Hourly collection completed. Success: 3, Failed: 0
+2025-06-10 13:27:35,152 - app.main - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk for last 720 hours
+2025-06-10 13:27:35,748 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-05-11 13:27:35.153040 and 2025-06-10 13:27:35.153040
+2025-06-10 13:29:35,708 - app.core.github_collector - INFO - Successfully fetched 48 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:29:35,736 - app.core.github_collector - INFO - Saved 48 commits to ./data/commits\hourly\QuantumFusion-network_qf-polkavm-sdk_720h_20250610_132935.json
+2025-06-10 13:41:57,495 - app.main - INFO - Generating post for QuantumFusion-network/qf-polkavm-sdk (720h)
+2025-06-10 13:41:58,176 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-05-11 13:41:57.495566 and 2025-06-10 13:41:57.495566
+2025-06-10 13:43:27,589 - urllib3.connectionpool - WARNING - Retrying (GithubRetry(total=9, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /users/web-flow
+2025-06-10 13:43:58,852 - app.core.github_collector - INFO - Successfully fetched 48 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:43:58,856 - app.core.post_generator - INFO - Generating post for QuantumFusion-network/qf-polkavm-sdk (720h)
+2025-06-10 13:43:58,887 - app.core.claude_client - INFO - Generating post content with Claude for QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:44:08,750 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 13:44:08,757 - app.core.claude_client - INFO - AI selected template: PostTemplate.FEATURE (type: feature)
+2025-06-10 13:44:08,825 - app.utils.html_generator - INFO - Generated HTML for post 777a5e8e-8a7a-4df9-9f00-ffd3a61e4f5e
+2025-06-10 13:44:08,826 - app.core.post_generator - ERROR - Error saving post to file: [Errno 2] No such file or directory: './data/posts\\720h\\QuantumFusion-network/qf-polkavm-sdk_720h_20250610_134408.html'
+2025-06-10 13:44:08,826 - app.core.post_generator - ERROR - Error generating post: [Errno 2] No such file or directory: './data/posts\\720h\\QuantumFusion-network/qf-polkavm-sdk_720h_20250610_134408.html'
+2025-06-10 13:54:41,609 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-10 13:54:42,072 - scheduler - INFO - Initializing GitHub commit scheduler
+2025-06-10 13:54:42,189 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 5000, 'reset': datetime.datetime(2025, 6, 10, 11, 54, 41, tzinfo=datetime.timezone.utc)}}
+2025-06-10 13:54:42,305 - scheduler - INFO - Starting GitHub commit scheduler
+2025-06-10 13:54:42,305 - scheduler - INFO - Scheduler started. Monitoring 3 repositories:
+2025-06-10 13:54:42,305 - scheduler - INFO -   - QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:54:42,306 - scheduler - INFO -   - QuantumFusion-network/qf-solochain
+2025-06-10 13:54:42,306 - scheduler - INFO -   - QuantumFusion-network/apps
+2025-06-10 13:54:42,306 - scheduler - INFO - IMPORTANT: Posts are generated ON-DEMAND via API calls
+2025-06-10 13:54:42,306 - scheduler - INFO - Scheduler only collects commits automatically every hour
+2025-06-10 13:54:42,307 - scheduler - INFO - Running initial commit collection...
+2025-06-10 13:54:42,307 - scheduler - INFO - Starting hourly commit collection
+2025-06-10 13:54:42,307 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:54:43,029 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 12:54:42.308013 and 2025-06-10 13:54:42.308013
+2025-06-10 13:54:43,916 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:54:43,917 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:54:43,917 - scheduler - INFO - Collecting commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:54:44,844 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-solochain between 2025-06-10 12:54:43.918485 and 2025-06-10 13:54:43.918485
+2025-06-10 13:54:45,749 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-solochain
+2025-06-10 13:54:45,750 - scheduler - INFO - No new commits found in QuantumFusion-network/qf-solochain
+2025-06-10 13:54:45,751 - scheduler - INFO - Collecting commits from QuantumFusion-network/apps
+2025-06-10 13:54:45,755 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 13:54:45,762 - app.main - INFO - Claude API connected: True
+2025-06-10 13:54:46,717 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/apps between 2025-06-10 12:54:45.751543 and 2025-06-10 13:54:45.751543
+2025-06-10 13:54:47,588 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/apps
+2025-06-10 13:54:47,588 - scheduler - INFO - No new commits found in QuantumFusion-network/apps
+2025-06-10 13:54:47,589 - scheduler - INFO - Hourly collection completed. Success: 3, Failed: 0
+2025-06-10 13:55:49,585 - app.main - INFO - Generating post for QuantumFusion-network/qf-polkavm-sdk (720h)
+2025-06-10 13:55:50,355 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-05-11 13:55:49.586323 and 2025-06-10 13:55:49.586323
+2025-06-10 13:57:52,408 - app.core.github_collector - INFO - Successfully fetched 48 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:57:52,421 - app.core.post_generator - INFO - Generating post for QuantumFusion-network/qf-polkavm-sdk (720h)
+2025-06-10 13:57:52,423 - app.core.claude_client - INFO - Generating post content with Claude for QuantumFusion-network/qf-polkavm-sdk
+2025-06-10 13:58:03,340 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-10 13:58:03,342 - app.core.claude_client - INFO - AI selected template: PostTemplate.FEATURE (type: feature)
+2025-06-10 13:58:03,358 - app.utils.html_generator - INFO - Generated HTML for post 95ac304e-ab28-452d-b551-84b13c06e5e9
+2025-06-10 13:58:03,359 - app.core.post_generator - INFO - Saved post to ./data/posts\720h\QuantumFusion-network_qf-polkavm-sdk_720h_20250610_135803.html
+2025-06-10 13:58:03,360 - app.core.post_generator - INFO - Successfully generated post for QuantumFusion-network/qf-polkavm-sdk

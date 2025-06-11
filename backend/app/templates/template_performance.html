@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.post {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.timestamp {
+  color: #6e767d;
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.content {
+  color: #2f3336;
+  line-height: 1.5;
+}
+
+.performance-banner {
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.performance-banner::before {
+  content: "⚡";
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  opacity: 0.3;
+}
+
+.performance-banner h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+}
+
+.performance-banner p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.speed-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.speed-card {
+  background: #fff8f0;
+  border: 2px solid #ffe4b3;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.speed-card::before {
+  content: "🚀";
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 16px;
+}
+
+.speed-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ff6b35;
+  margin: 8px 0;
+}
+
+.speed-label {
+  font-size: 12px;
+  color: #8b4513;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+
+.speed-improvement {
+  font-size: 11px;
+  color: #28a745;
+  font-weight: 600;
+}
+
+.optimization-list {
+  background: #f8f9fa;
+  border-left: 4px solid #ff6b35;
+  border-radius: 0 6px 6px 0;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.optimization-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px 0;
+}
+
+.optimization-item:last-child {
+  margin-bottom: 0;
+}
+
+.optimization-icon {
+  width: 20px;
+  height: 20px;
+  background: #ff6b35;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.optimization-icon::after {
+  content: "⚡";
+  color: white;
+  font-size: 10px;
+}
+
+.optimization-text {
+  flex: 1;
+  font-size: 14px;
+  color: #495057;
+}
+
+.performance-comparison {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.comparison-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.comparison-row:last-child {
+  border-bottom: none;
+}
+
+.comparison-label {
+  font-weight: 500;
+}
+
+.comparison-value {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.improvement-tag {
+  background: #28a745;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  margin-left: 8px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.stat-box {
+  background: #f7f9fa;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ff6b35;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #586069;
+  margin-top: 5px;
+}
+
+.code-preview {
+  background: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 15px 0;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  overflow-x: auto;
+}
+
+.code-preview .code-header {
+  color: #586069;
+  font-size: 12px;
+  margin-bottom: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.benchmark-chart {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.benchmark-bars {
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  height: 60px;
+  margin: 15px 0;
+}
+
+.benchmark-bar {
+  width: 20px;
+  background: linear-gradient(to top, #ff6b35, #f7931e);
+  border-radius: 2px;
+  margin: 0 5px;
+  position: relative;
+}
+
+.benchmark-bar.old {
+  background: #e9ecef;
+  height: 50px;
+}
+
+.benchmark-bar.new {
+  height: 25px;
+}
+
+.benchmark-bar::after {
+  content: attr(data-value);
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: #666;
+}
+
+.progress-section {
+  margin: 20px 0;
+}
+
+.progress-item {
+  margin-bottom: 15px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.progress-bar {
+  width: 100%;
+  background: #ebeef0;
+  border-radius: 10px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.progress {
+  background: linear-gradient(90deg, #ff6b35, #f7931e);
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.tag {
+  background: #ff6b3520;
+  color: #ff6b35;
+  padding: 3px 8px;
+  border-radius: 15px;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.engagement {
+  display: flex;
+  gap: 20px;
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: 1px solid #ebeef0;
+}
+
+.engagement-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #536471;
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<div class="post">
+  <div class="post-header">
+    <img src="{{ avatar_url }}" class="avatar">
+    <div>
+      <span class="username">{{ username }}</span>
+      <span class="timestamp">{{ timeago }}</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="performance-banner">
+      <h3>{{ content.title }}</h3>
+      <p>{{ content.summary }}</p>
+    </div>
+
+    <p><strong>⚡ Performance Focus:</strong> {{ content.detailed_explanation }}</p>
+
+    <div class="speed-metrics">
+      <div class="speed-card">
+        <div class="speed-label">Response Time</div>
+        <div class="speed-value">{{ 500 - (metrics.total_commits * 20) if metrics.total_commits < 20 else 100 }}ms</div>
+        <div class="speed-improvement">-{{ metrics.total_commits * 15 }}% faster</div>
+      </div>
+      <div class="speed-card">
+        <div class="speed-label">Throughput</div>
+        <div class="speed-value">{{ 1000 + (metrics.total_commits * 100) }}</div>
+        <div class="speed-improvement">+{{ metrics.total_commits * 25 }}% improved</div>
+      </div>
+      <div class="speed-card">
+        <div class="speed-label">Memory Usage</div>
+        <div class="speed-value">{{ 100 - (metrics.total_commits * 5) if metrics.total_commits < 15 else 25 }}MB</div>
+        <div class="speed-improvement">-{{ metrics.total_commits * 8 }}% reduced</div>
+      </div>
+    </div>
+
+    {% if content.technical_highlights %}
+    <div class="optimization-list">
+      <h4 style="margin-top: 0; color: #ff6b35;">🚀 Performance Optimizations</h4>
+      {% for highlight in content.technical_highlights %}
+      <div class="optimization-item">
+        <div class="optimization-icon"></div>
+        <div class="optimization-text">{{ highlight }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="performance-comparison">
+      <h4 style="margin-top: 0; text-align: center;">📈 Before vs After</h4>
+      <div class="comparison-row">
+        <span class="comparison-label">Load Time</span>
+        <span class="comparison-value">
+          {{ 2.5 - (metrics.total_commits * 0.2) if metrics.total_commits < 10 else 0.5 }}s
+          <span class="improvement-tag">{{ metrics.total_commits * 20 }}% faster</span>
+        </span>
+      </div>
+      <div class="comparison-row">
+        <span class="comparison-label">Database Queries</span>
+        <span class="comparison-value">
+          {{ 50 - (metrics.total_commits * 3) if metrics.total_commits < 15 else 5 }}
+          <span class="improvement-tag">{{ metrics.total_commits * 10 }}% fewer</span>
+        </span>
+      </div>
+      <div class="comparison-row">
+        <span class="comparison-label">CPU Usage</span>
+        <span class="comparison-value">
+          {{ 80 - (metrics.total_commits * 4) if metrics.total_commits < 18 else 8 }}%
+          <span class="improvement-tag">{{ metrics.total_commits * 8 }}% reduced</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-number">{{ metrics.total_commits }}</div>
+        <div class="stat-label">Optimizations</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ metrics.files_changed }}</div>
+        <div class="stat-label">Files Tuned</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ (metrics.lines_added + metrics.lines_removed) | format_number }}</div>
+        <div class="stat-label">Lines Optimized</div>
+      </div>
+    </div>
+
+    {% if content.code_snippets %}
+    {% for snippet in content.code_snippets %}
+    <div class="code-preview">
+      <div class="code-header">⚡ {{ snippet.description }} ({{ snippet.language }})</div>
+      <code>{{ snippet.code }}</code>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="progress-section">
+      <h4>🎯 Performance Gains</h4>
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>Algorithm Efficiency</span>
+          <span>{{ 75 + (metrics.total_commits * 5) if metrics.total_commits < 5 else 95 }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" style="width: {{ 75 + (metrics.total_commits * 5) if metrics.total_commits < 5 else 95 }}%"></div>
+        </div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>Memory Optimization</span>
+          <span>{{ 70 + (metrics.total_commits * 7) if metrics.total_commits < 4 else 98 }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" style="width: {{ 70 + (metrics.total_commits * 7) if metrics.total_commits < 4 else 98 }}%"></div>
+        </div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>Network Efficiency</span>
+          <span>{{ 80 + (metrics.total_commits * 4) if metrics.total_commits < 5 else 99 }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" style="width: {{ 80 + (metrics.total_commits * 4) if metrics.total_commits < 5 else 99 }}%"></div>
+        </div>
+      </div>
+    </div>
+
+    {% if charts %}
+    {% for chart_html in charts %}
+    {{ chart_html | safe }}
+    {% endfor %}
+    {% endif %}
+
+    <div>
+      {% for tag in content.tags %}
+      <span class="tag">#{{ tag }}</span>
+      {% endfor %}
+      {% for hashtag in content.hashtags %}
+      <span class="tag">{{ hashtag }}</span>
+      {% endfor %}
+    </div>
+
+    <div class="engagement">
+      <div class="engagement-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        {{ engagement.likes }}
+      </div>
+      <div class="engagement-item">  
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z"/>
+        </svg>
+        {{ engagement.comments }}
+      </div>
+      <div class="engagement-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.77 15.67c-.292-.293-.767-.293-1.06 0l-2.22 2.22V7.65c0-2.068-1.683-3.75-3.75-3.75h-5.85c-.414 0-.75.336-.75.75s.336.75.75.75h5.85c1.24 0 2.25 1.01 2.25 2.25v10.24l-2.22-2.22c-.293-.293-.768-.293-1.06 0s-.294.768 0 1.06l3.5 3.5c.145.147.337.22.53.22s.383-.072.53-.22l3.5-3.5c.294-.292.294-.767 0-1.06zm-10.66 3.28H7.26c-1.24 0-2.25-1.01-2.25-2.25V6.46l2.22 2.22c.148.147.34.22.532.22s.384-.073.53-.22c.293-.293.293-.768 0-1.06l-3.5-3.5c-.293-.294-.768-.294-1.06 0l-3.5 3.5c-.294.292-.294.767 0 1.06s.767.293 1.06 0l2.22-2.22V16.7c0 2.068 1.683 3.75 3.75 3.75h5.85c.414 0 .75-.336.75-.75s-.337-.75-.75-.75z"/>
+        </svg>
+        {{ engagement.shares }}
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.post {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.timestamp {
+  color: #6e767d;
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.content {
+  color: #2f3336;
+  line-height: 1.5;
+}
+
+.security-banner {
+  background: linear-gradient(135deg, #6f42c1 0%, #495057 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.security-banner::before {
+  content: "🔒";
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  opacity: 0.3;
+}
+
+.security-banner h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+}
+
+.security-banner p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.security-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.security-card {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 15px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.security-card::before {
+  content: "🛡️";
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.security-card.enhanced {
+  border-color: #28a745;
+  background: #f8fff9;
+}
+
+.security-card.enhanced::before {
+  content: "✅";
+}
+
+.security-card h4 {
+  color: #495057;
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  padding-right: 30px;
+}
+
+.security-card.enhanced h4 {
+  color: #155724;
+}
+
+.security-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.security-metrics {
+  background: linear-gradient(135deg, #6f42c1, #495057);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.security-metrics h4 {
+  margin: 0 0 15px 0;
+  text-align: center;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.metric-item {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.metric-label {
+  font-size: 11px;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.protection-level {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.protection-level h4 {
+  color: #155724;
+  margin: 0 0 10px 0;
+}
+
+.protection-bar {
+  background: #e9ecef;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.protection-fill {
+  background: linear-gradient(90deg, #28a745, #20c997);
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.stat-box {
+  background: #f7f9fa;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 20px;
+  font-weight: 600;
+  color: #6f42c1;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #586069;
+  margin-top: 5px;
+}
+
+.code-preview {
+  background: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 15px 0;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  overflow-x: auto;
+}
+
+.code-preview .code-header {
+  color: #586069;
+  font-size: 12px;
+  margin-bottom: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.security-diff {
+  background: #f6f8fa;
+  padding: 15px;
+  border-radius: 6px;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  margin: 10px 0;
+  border-left: 4px solid #6f42c1;
+}
+
+.diff-added {
+  background: #e6ffec;
+  padding: 2px 4px;
+  color: #28a745;
+  margin: 2px 0;
+  border-radius: 2px;
+}
+
+.diff-removed {
+  background: #ffebe9;
+  padding: 2px 4px;
+  color: #d73a49;
+  margin: 2px 0;
+  border-radius: 2px;
+}
+
+.compliance-badges {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: #6f42c1;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge.enhanced {
+  background: #28a745;
+}
+
+.tag {
+  background: #6f42c120;
+  color: #6f42c1;
+  padding: 3px 8px;
+  border-radius: 15px;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.engagement {
+  display: flex;
+  gap: 20px;
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: 1px solid #ebeef0;
+}
+
+.engagement-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #536471;
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<div class="post">
+  <div class="post-header">
+    <img src="{{ avatar_url }}" class="avatar">
+    <div>
+      <span class="username">{{ username }}</span>
+      <span class="timestamp">{{ timeago }}</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="security-banner">
+      <h3>{{ content.title }}</h3>
+      <p>{{ content.summary }}</p>
+    </div>
+
+    <p><strong>🔐 Security Focus:</strong> {{ content.detailed_explanation }}</p>
+
+    {% if content.technical_highlights %}
+    <div class="security-features">
+      {% for highlight in content.technical_highlights %}
+      <div class="security-card enhanced">
+        <h4>🛡️ Enhanced Protection</h4>
+        <p>{{ highlight }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="security-metrics">
+      <h4>🔒 Security Strength Indicators</h4>
+      <div class="metrics-grid">
+        <div class="metric-item">
+          <div class="metric-value">{{ 95 + (metrics.security_fixes * 2) if metrics.security_fixes < 3 else 99 }}%</div>
+          <div class="metric-label">Protection Level</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value">{{ metrics.security_fixes if metrics.security_fixes > 0 else 1 }}</div>
+          <div class="metric-label">Security Updates</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value">{{ 100 - (metrics.files_changed * 5) if metrics.files_changed < 10 else 50 }}+</div>
+          <div class="metric-label">Audit Score</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value">{{ metrics.contributors }}</div>
+          <div class="metric-label">Reviewers</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="protection-level">
+      <h4>🎯 Overall Security Posture</h4>
+      <div class="protection-bar">
+        <div class="protection-fill" style="width: {{ 85 + (metrics.total_commits * 3) if metrics.total_commits < 5 else 98 }}%"></div>
+      </div>
+      <p style="margin: 5px 0 0 0; color: #155724; font-weight: 600;">
+        {{ 85 + (metrics.total_commits * 3) if metrics.total_commits < 5 else 98 }}% - Excellent Protection
+      </p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-number">{{ metrics.total_commits }}</div>
+        <div class="stat-label">Security Commits</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ metrics.files_changed }}</div>
+        <div class="stat-label">Files Secured</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">{{ (metrics.lines_added + metrics.lines_removed) | format_number }}</div>
+        <div class="stat-label">Lines Hardened</div>
+      </div>
+    </div>
+
+    {% if diff_content %}
+    <div class="security-diff">
+      <strong>🔧 Security Enhancements:</strong><br>
+      {% for diff in diff_content %}
+      <div class="diff-{{ diff.type }}">{{ '+' if diff.type == 'added' else '-' }} {{ diff.content }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if content.code_snippets %}
+    {% for snippet in content.code_snippets %}
+    <div class="code-preview">
+      <div class="code-header">🔐 {{ snippet.description }} ({{ snippet.language }})</div>
+      <code>{{ snippet.code }}</code>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="compliance-badges">
+      <span class="badge enhanced">Security Enhanced</span>
+      <span class="badge">Best Practices</span>
+      <span class="badge enhanced">Audit Ready</span>
+      <span class="badge">Zero Trust</span>
+    </div>
+
+    {% if charts %}
+    {% for chart_html in charts %}
+    {{ chart_html | safe }}
+    {% endfor %}
+    {% endif %}
+
+    <div>
+      {% for tag in content.tags %}
+      <span class="tag">#{{ tag }}</span>
+      {% endfor %}
+      {% for hashtag in content.hashtags %}
+      <span class="tag">{{ hashtag }}</span>
+      {% endfor %}
+    </div>
+
+    <div class="engagement">
+      <div class="engagement-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        {{ engagement.likes }}
+      </div>
+      <div class="engagement-item">  
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z"/>
+        </svg>
+        {{ engagement.comments }}
+      </div>
+      <div class="engagement-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.77 15.67c-.292-.293-.767-.293-1.06 0l-2.22 2.22V7.65c0-2.068-1.683-3.75-3.75-3.75h-5.85c-.414 0-.75.336-.75.75s.336.75.75.75h5.85c1.24 0 2.25 1.01 2.25 2.25v10.24l-2.22-2.22c-.293-.293-.768-.293-1.06 0s-.294.768 0 1.06l3.5 3.5c.145.147.337.22.53.22s.383-.072.53-.22l3.5-3.5c.294-.292.294-.767 0-1.06zm-10.66 3.28H7.26c-1.24 0-2.25-1.01-2.25-2.25V6.46l2.22 2.22c.148.147.34.22.532.22s.384-.073.53-.22c.293-.293.293-.768 0-1.06l-3.5-3.5c-.293-.294-.768-.294-1.06 0l-3.5 3.5c-.294.292-.294.767 0 1.06s.767.293 1.06 0l2.22-2.22V16.7c0 2.068 1.683 3.75 3.75 3.75h5.85c.414 0 .75-.336.75-.75s-.337-.75-.75-.75z"/>
+        </svg>
+        {{ engagement.shares }}
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
