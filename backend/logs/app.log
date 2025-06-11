@@ -491,3 +491,39 @@ name
 2025-06-10 13:58:03,358 - app.utils.html_generator - INFO - Generated HTML for post 95ac304e-ab28-452d-b551-84b13c06e5e9
 2025-06-10 13:58:03,359 - app.core.post_generator - INFO - Saved post to ./data/posts\720h\QuantumFusion-network_qf-polkavm-sdk_720h_20250610_135803.html
 2025-06-10 13:58:03,360 - app.core.post_generator - INFO - Successfully generated post for QuantumFusion-network/qf-polkavm-sdk
+2025-06-11 09:12:11,150 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-11 09:12:11,766 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 5000, 'reset': datetime.datetime(2025, 6, 11, 7, 12, 11, tzinfo=datetime.timezone.utc)}}
+2025-06-11 09:12:13,677 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-11 09:12:13,695 - app.main - INFO - Claude API connected: True
+2025-06-11 09:12:50,559 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-11 09:12:50,602 - app.main - INFO - Frontend requesting posts for QuantumFusion-network/qf-polkavm-sdk (24h)
+2025-06-11 09:12:51,236 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 09:12:50.602466 and 2025-06-11 09:12:50.602466
+2025-06-11 09:12:52,116 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-11 09:12:58,644 - app.main - INFO - Frontend requesting posts for QuantumFusion-network/qf-polkavm-sdk (24h)
+2025-06-11 09:12:59,276 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 09:12:58.645060 and 2025-06-11 09:12:58.645060
+2025-06-11 09:13:00,119 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-11 09:23:07,298 - app.main - INFO - Frontend requesting posts for QuantumFusion-network/qf-polkavm-sdk (24h)
+2025-06-11 09:23:07,966 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 09:23:07.299887 and 2025-06-11 09:23:07.299887
+2025-06-11 09:23:08,795 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-11 09:23:13,729 - app.main - INFO - Frontend requesting posts for QuantumFusion-network/qf-polkavm-sdk (7d)
+2025-06-11 09:23:18,182 - app.main - INFO - Frontend requesting posts for QuantumFusion-network/qf-polkavm-sdk (2h)
+2025-06-11 09:23:18,877 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-11 07:23:18.183208 and 2025-06-11 09:23:18.183208
+2025-06-11 09:23:19,754 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-11 09:23:22,665 - app.main - INFO - Frontend requesting posts for QuantumFusion-network/qf-polkavm-sdk (2h)
+2025-06-11 09:23:23,316 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-11 07:23:22.665532 and 2025-06-11 09:23:22.665532
+2025-06-11 09:23:24,154 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-11 09:30:19,985 - app.main - INFO - Starting AI GitHub Explainer
+2025-06-11 09:30:20,565 - app.main - INFO - GitHub API rate limit: {'core': {'limit': 5000, 'remaining': 4990, 'reset': datetime.datetime(2025, 6, 11, 7, 12, 51, tzinfo=datetime.timezone.utc)}}
+2025-06-11 09:30:22,153 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-11 09:30:22,158 - app.main - INFO - Claude API connected: True
+2025-06-11 09:30:34,178 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-11 09:30:35,923 - httpx - INFO - HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2025-06-11 09:30:35,942 - app.main - INFO - Frontend requesting posts for QuantumFusion-network/qf-polkavm-sdk (24h)
+2025-06-11 09:30:36,537 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 09:30:35.943267 and 2025-06-11 09:30:35.943267
+2025-06-11 09:30:37,359 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-11 09:30:39,756 - app.main - INFO - Frontend requesting posts for QuantumFusion-network/qf-polkavm-sdk (24h)
+2025-06-11 09:30:40,386 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 09:30:39.757154 and 2025-06-11 09:30:39.757154
+2025-06-11 09:30:41,159 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk
+2025-06-11 09:30:42,260 - app.main - INFO - Frontend requesting posts for QuantumFusion-network/qf-polkavm-sdk (24h)
+2025-06-11 09:30:42,856 - app.core.github_collector - INFO - Fetching commits from QuantumFusion-network/qf-polkavm-sdk between 2025-06-10 09:30:42.260888 and 2025-06-11 09:30:42.260888
+2025-06-11 09:30:43,641 - app.core.github_collector - INFO - Successfully fetched 0 commits from QuantumFusion-network/qf-polkavm-sdk

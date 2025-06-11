@@ -1,112 +1,83 @@
+# backend/app/core/post_generator.py - FIXED VERSION
 import os
 import logging
-import uuid
 from datetime import datetime
-from typing import Optional, Dict, Any, List
+from typing import Dict, Any, List, Optional
+from uuid import uuid4
 
-from ..models.commit import CommitCollection
 from ..models.post import (
-    Post, PostContent, PostMetrics, PostGenerationRequest, 
-    PostGenerationResponse, PostType, PostTemplate, ChartData
+    Post, PostContent, PostMetrics, PostType, PostTemplate,
+    PostGenerationRequest, PostGenerationResponse
 )
+from ..models.commit import CommitCollection
 from .claude_client import ClaudeClient
 from .config import settings
 from ..utils.template_selector import TemplateSelector
 from ..utils.html_generator import HTMLGenerator
-from ..utils.chart_generator import ChartGenerator
 
 logger = logging.getLogger(__name__)
 
 class PostGenerator:
+    """Core post generation service that orchestrates the entire process"""
+    
     def __init__(self):
         self.claude_client = ClaudeClient()
         self.template_selector = TemplateSelector()
         self.html_generator = HTMLGenerator()
-        self.chart_generator = ChartGenerator()
     
-    def generate_post(self, request: PostGenerationRequest, commits: CommitCollection) -> PostGenerationResponse:
-        """Generate a complete post from commit data"""
+    async def generate_post(self, request: PostGenerationRequest, commits: CommitCollection) -> PostGenerationResponse:
+        """Generate a complete post from commits"""
         start_time = datetime.now()
         
         try:
             logger.info(f"Generating post for {request.repository} ({request.time_period})")
             
-            # Validate input
-            if not commits.commits:
+            # Generate AI content
+            ai_content = await self.claude_client.generate_post_content(request, commits)
+            
+            if not ai_content:
                 return PostGenerationResponse(
                     success=False,
-                    error_message="No commits found for the specified time period",
-                    generation_time_seconds=0
+                    error_message="Failed to generate AI content",
+                    generation_time_seconds=0.0
                 )
             
-            # Generate content with Claude
-            claude_response = self.claude_client.generate_post_content(
-                commits=commits,
-                target_audience=request.target_audience,
-                force_template=request.force_template
-            )
-            
-            # Generate charts if requested
-            charts = []
-            if request.include_charts:
-                charts = self._create_simple_charts(commits)
-            
-            # Create post content
-            content = PostContent(
-                title=claude_response["content"].get("title", "Repository Update"),
-                summary=claude_response["content"].get("summary", ""),
-                detailed_explanation=claude_response["content"].get("detailed_explanation", ""),
-                technical_highlights=claude_response["content"].get("technical_highlights", []),
-                user_benefits=claude_response["content"].get("user_benefits", []),
-                code_snippets=claude_response["content"].get("code_snippets", []),
-                charts=charts,
-                tags=claude_response["content"].get("tags", []),
-                hashtags=claude_response["content"].get("hashtags", [])
-            )
-            
-            # Create metrics
-            metrics = PostMetrics(
-                total_commits=commits.total_commits,
-                files_changed=commits.total_files_changed,
-                lines_added=commits.total_additions,
-                lines_removed=commits.total_deletions,
-                contributors=len(commits.top_contributors),
-                time_period=request.time_period,
-                breaking_changes=commits.breaking_changes,
-                security_fixes=commits.security_updates
-            )
-            
-            # Create post
+            # Create post object
             post = Post(
-                id=str(uuid.uuid4()),
-                post_type=claude_response["post_type"],
-                template=claude_response["template"],
-                content=content,
-                metrics=metrics,
+                id=str(uuid4()),
+                post_type=self._determine_post_type(ai_content),
+                template=PostTemplate(ai_content.get("template_type", "general")),
+                content=PostContent(
+                    title=ai_content.get("title", "Repository Update"),
+                    summary=ai_content.get("summary", ""),
+                    detailed_explanation=ai_content.get("detailed_explanation", ""),
+                    technical_highlights=ai_content.get("technical_highlights", []),
+                    user_benefits=ai_content.get("user_benefits", []),
+                    code_snippets=ai_content.get("code_snippets", []),
+                    tags=ai_content.get("tags", []),
+                    hashtags=ai_content.get("hashtags", [])
+                ),
+                metrics=self._calculate_metrics(commits, request.time_period),
                 created_at=datetime.now(),
                 repository=request.repository,
                 time_period=request.time_period,
-                source_commits=[c.sha for c in commits.commits]
+                source_commits=[commit.sha for commit in commits.commits[:10]]  # Limit to 10
             )
             
             # Generate HTML
             html_content = self.html_generator.generate_html(post)
             post.html_content = html_content
             
-            # Save to file
-            output_path = self._save_post_to_file(post, html_content)
+            # Save to file - FIXED path handling
+            output_path = self._save_post_to_file(post)
             post.output_file_path = output_path
             
-            # Calculate generation time
             generation_time = (datetime.now() - start_time).total_seconds()
-            
-            logger.info(f"Successfully generated post for {request.repository}")
             
             return PostGenerationResponse(
                 success=True,
                 post=post,
-                generation_time_seconds=generation_time,
-                tokens_used=claude_response.get("tokens_used")
+                generation_time_seconds=generation_time
             )
             
         except Exception as e:
@@ -119,87 +90,83 @@ class PostGenerator:
                 generation_time_seconds=generation_time
             )
     
-    def _create_simple_charts(self, commits: CommitCollection) -> List[ChartData]:
-        """Create simple charts from commit data"""
-        charts = []
-        
-        # Commit types chart
-        if commits.commit_types:
-            charts.append(ChartData(
-                chart_type="pie",
-                title="Commit Types Distribution",
-                data={
-                    "labels": [ct.value.title() for ct in commits.commit_types.keys()],
-                    "values": list(commits.commit_types.values())
-                },
-                description="Breakdown of different types of commits"
-            ))
-        
-        # Development progress
-        if commits.total_commits > 0:
-            completion_percentage = min(95, (commits.total_commits * 10))
-            charts.append(ChartData(
-                chart_type="progress",
-                title="Development Progress", 
-                data={
-                    "percentage": completion_percentage,
-                    "label": f"{commits.total_commits} commits this period"
-                },
-                description="Current development activity"
-            ))
-        
-        return charts
-    
-    def _create_charts(self, chart_suggestions: List[Dict[str, Any]]) -> List[ChartData]:
-        """Create chart data from suggestions (legacy method)"""
-        charts = []
-        
-        for suggestion in chart_suggestions:
-            try:
-                chart = ChartData(
-                    chart_type=suggestion["chart_type"],
-                    data=suggestion["data"],
-                    title=suggestion["title"],
-                    description=suggestion.get("description")
-                )
-                charts.append(chart)
-            except Exception as e:
-                logger.warning(f"Error creating chart: {e}")
-                continue
-        
-        return charts
-    
-    def _save_post_to_file(self, post: Post, html_content: str) -> str:
-        """Save post HTML to file"""
+    def _save_post_to_file(self, post: Post) -> str:
+        """Save post HTML to file with proper path handling"""
         try:
-            # Create directory structure
+            # Create output directory - FIXED path separators
             output_dir = os.path.join(settings.output_dir, post.time_period)
             os.makedirs(output_dir, exist_ok=True)
             
-            # Create filename
-            filename = post.filename
-            filepath = os.path.join(output_dir, filename)
+            # Generate filename
+            timestamp = post.created_at.strftime("%Y%m%d_%H%M%S")
+            safe_repo = post.repository.replace('/', '_').replace('\\', '_')  # Handle both separators
+            filename = f"{safe_repo}_{post.time_period}_{timestamp}.html"
             
-            # Save HTML file
-            with open(filepath, 'w', encoding='utf-8') as f:
-                f.write(html_content)
+            # Full file path
+            file_path = os.path.join(output_dir, filename)
             
-            logger.info(f"Saved post to {filepath}")
-            return filepath
+            # Write file
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(post.html_content)
+            
+            logger.info(f"Saved post to: {file_path}")
+            return file_path
             
         except Exception as e:
             logger.error(f"Error saving post to file: {e}")
             raise
     
-    def generate_batch_posts(self, repositories: List[str], time_periods: List[str]) -> List[PostGenerationResponse]:
+    def _determine_post_type(self, ai_content: Dict[str, Any]) -> PostType:
+        """Determine post type from AI content"""
+        template_type = ai_content.get("template_type", "general")
+        
+        mapping = {
+            "feature": PostType.FEATURE_ANNOUNCEMENT,
+            "bugfix": PostType.BUG_FIX_SUMMARY,
+            "security": PostType.SECURITY_UPDATE,
+            "performance": PostType.PERFORMANCE_IMPROVEMENT,
+            "general": PostType.GENERAL_UPDATE
+        }
+        
+        return mapping.get(template_type, PostType.GENERAL_UPDATE)
+    
+    def _calculate_metrics(self, commits: CommitCollection, time_period: str) -> PostMetrics:
+        """Calculate metrics from commits"""
+        total_additions = sum(commit.stats.additions for commit in commits.commits)
+        total_deletions = sum(commit.stats.deletions for commit in commits.commits)
+        total_files = sum(len(commit.files) for commit in commits.commits)
+        
+        # Count unique contributors
+        contributors = set(commit.author.login for commit in commits.commits if commit.author)
+        
+        # Count breaking changes (heuristic)
+        breaking_changes = sum(1 for commit in commits.commits 
+                             if any(keyword in commit.message.lower() 
+                                   for keyword in ['breaking', 'break', 'major']))
+        
+        # Count security fixes
+        security_fixes = sum(1 for commit in commits.commits 
+                           if any(keyword in commit.message.lower() 
+                                 for keyword in ['security', 'vulnerability', 'cve']))
+        
+        return PostMetrics(
+            total_commits=len(commits.commits),
+            files_changed=total_files,
+            lines_added=total_additions,
+            lines_removed=total_deletions,
+            contributors=len(contributors),
+            time_period=time_period,
+            breaking_changes=breaking_changes,
+            security_fixes=security_fixes
+        )
+    
+    async def generate_posts_batch(self, repositories: List[str], time_periods: List[str] = ["2h", "24h"]) -> List[PostGenerationResponse]:
         """Generate posts for multiple repositories and time periods"""
         responses = []
         
         for repository in repositories:
             for time_period in time_periods:
                 try:
-                    # This would need to be connected to the commit collection logic
-                    # For now, creating a placeholder request
                     request = PostGenerationRequest(
                         repository=repository,
                         time_period=time_period
