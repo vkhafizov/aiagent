@@ -66,9 +66,6 @@ const DateSelector = ({
           >
             {loading ? '⏳ ' + generateButtonText : '🚀 ' + generateButtonText}
           </button>
-          <p className={styles.repositoryInfo}>
-            Repository: QuantumFusion-network/qf-polkavm-sdk
-          </p>
         </div>
       </div>
     </div>
