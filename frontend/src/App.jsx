@@ -63,9 +63,10 @@ function App() {
       console.log(`Generating posts for ${selectedTimePeriod} period...`);
       
       const response = await apiService.generatePosts(
-        'QuantumFusion-network/qf-polkavm-sdk', 
-        selectedTimePeriod,
-        selectedFormat
+      "multiple repositories",
+      selectedTimePeriod,
+      selectedFormat,
+      selectedDate
       );
 
       console.log('Backend response:', response);
