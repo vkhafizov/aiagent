@@ -1,8 +1,8 @@
 import re
 import json
 import logging
-from datetime import datetime, timedelta
-from typing import List, Optional, Dict, Any
+from datetime import datetime, timedelta, timezone
+from typing import List, Optional, Dict, Any, Set
 from github import Github, Repository, Commit as GithubCommit
 from github.GithubException import GithubException
 
@@ -120,7 +120,7 @@ class GitHubCollector:
         file_changes = self._extract_file_changes(github_commit)
         filenames = [fc.filename for fc in file_changes]
         
-        # Create author and committer
+        # Create author and committer - handle potential None values
         author = CommitAuthor(
             name=github_commit.author.name if github_commit.author else "Unknown",
             email=github_commit.author.email if github_commit.author else "",
@@ -146,14 +146,19 @@ class GitHubCollector:
         affects_security = self._affects_security(github_commit.commit.message, filenames)
         affects_performance = self._affects_performance(github_commit.commit.message, filenames)
         
+        # Convert timestamp to timezone-aware if needed
+        timestamp = github_commit.commit.author.date
+        if timestamp.tzinfo is None:
+            timestamp = timestamp.replace(tzinfo=timezone.utc)
+        
         return Commit(
             sha=github_commit.sha,
             message=github_commit.commit.message,
             author=author,
             committer=committer,
-            timestamp=github_commit.commit.author.date,
+            timestamp=timestamp,
             repository=repo_name,
-            branch="main",  # Default branch, could be enhanced
+            branch="main",  # Will be updated in get_commits_all_branches
             url=github_commit.html_url,
             files_changed=file_changes,
             additions=total_additions,
@@ -165,49 +170,150 @@ class GitHubCollector:
             affects_performance=affects_performance
         )
     
-    def get_commits(self, repo_name: str, since: datetime, until: datetime = None) -> List[Commit]:
-        """Get commits from a repository within a time range"""
+    def get_commits_all_branches(self, repo_name: str, since: datetime, until: datetime = None, max_branches: int = 70) -> List[Commit]:
+        """Get commits from ALL branches within a time range"""
         try:
             repo = self.github.get_repo(repo_name)
-            until = until or datetime.now()
             
-            logger.info(f"Fetching commits from {repo_name} between {since} and {until}")
+            # Ensure timezone-aware datetimes
+            if until is None:
+                until = datetime.now(timezone.utc)
+            elif until.tzinfo is None:
+                until = until.replace(tzinfo=timezone.utc)
             
-            # Get commits from GitHub
-            github_commits = repo.get_commits(since=since, until=until)
+            if since.tzinfo is None:
+                since = since.replace(tzinfo=timezone.utc)
             
-            commits = []
-            for github_commit in github_commits:
+            logger.info(f"Fetching commits from ALL branches of {repo_name} between {since} and {until}")
+            
+            # Get all branches
+            branches = list(repo.get_branches())
+            logger.info(f"Found {len(branches)} branches in {repo_name}")
+            
+            # Limit branches to avoid rate limiting
+            if len(branches) > max_branches:
+                logger.info(f"Limiting to first {max_branches} branches to avoid rate limits")
+                branches = branches[:max_branches]
+            
+            all_commits = {}  # Use dict to avoid duplicates, key = sha
+            branch_stats = {}
+            
+            for branch in branches:
+                branch_name = branch.name
+                logger.info(f"Checking branch: {branch_name}")
+                
                 try:
-                    commit = self._convert_github_commit(github_commit, repo_name)
-                    commits.append(commit)
+                    # Get commits from this specific branch
+                    branch_commits = repo.get_commits(sha=branch_name, since=since, until=until)
+                    
+                    branch_commit_count = 0
+                    for github_commit in branch_commits:
+                        if github_commit.sha not in all_commits:
+                            # Convert to our Commit model
+                            commit = self._convert_github_commit(github_commit, repo_name)
+                            # Update branch info
+                            commit.branch = branch_name
+                            all_commits[github_commit.sha] = commit
+                            branch_commit_count += 1
+                        else:
+                            # Commit already exists, just update branch info if it's from main
+                            existing_commit = all_commits[github_commit.sha]
+                            if existing_commit.branch == "main" and branch_name != "main":
+                                existing_commit.branch = branch_name
+                    
+                    branch_stats[branch_name] = branch_commit_count
+                    logger.info(f"Branch {branch_name}: {branch_commit_count} new commits")
+                    
                 except Exception as e:
-                    logger.error(f"Error processing commit {github_commit.sha}: {e}")
+                    logger.warning(f"Error getting commits from branch {branch_name}: {e}")
+                    branch_stats[branch_name] = f"Error: {str(e)}"
                     continue
             
-            logger.info(f"Successfully fetched {len(commits)} commits from {repo_name}")
-            return commits
+            # Convert dict values to list
+            commits_list = list(all_commits.values())
+            
+            # Sort by timestamp (newest first)
+            commits_list.sort(key=lambda c: c.timestamp, reverse=True)
+            
+            logger.info(f"Total unique commits found across all branches: {len(commits_list)}")
+            logger.info(f"Branch statistics: {branch_stats}")
+            
+            return commits_list
             
         except GithubException as e:
             logger.error(f"GitHub API error for repo {repo_name}: {e}")
+            logger.error(f"Error details: status={e.status}, data={e.data}")
             raise
         except Exception as e:
             logger.error(f"Unexpected error fetching commits from {repo_name}: {e}")
             raise
     
-    def get_commits_for_period(self, repo_name: str, hours: int) -> CommitCollection:
-        """Get commits for the last N hours"""
-        end_time = datetime.now()
+    def get_commits(self, repo_name: str, since: datetime, until: datetime = None, all_branches: bool = True) -> List[Commit]:
+        """Get commits from a repository within a time range"""
+        if all_branches:
+            return self.get_commits_all_branches(repo_name, since, until)
+        else:
+            # Original method - only default branch
+            try:
+                repo = self.github.get_repo(repo_name)
+                
+                # Ensure until is timezone-aware
+                if until is None:
+                    until = datetime.now(timezone.utc)
+                elif until.tzinfo is None:
+                    until = until.replace(tzinfo=timezone.utc)
+                
+                # Ensure since is timezone-aware
+                if since.tzinfo is None:
+                    since = since.replace(tzinfo=timezone.utc)
+                
+                logger.info(f"Fetching commits from default branch of {repo_name} between {since} and {until}")
+                
+                # Get commits from GitHub API (default branch only)
+                github_commits = repo.get_commits(since=since, until=until)
+                
+                # Convert iterator to list to see how many commits we got
+                commits_list = list(github_commits)
+                logger.info(f"GitHub API returned {len(commits_list)} raw commits from default branch")
+                
+                commits = []
+                for i, github_commit in enumerate(commits_list):
+                    try:
+                        commit = self._convert_github_commit(github_commit, repo_name)
+                        commits.append(commit)
+                        logger.debug(f"Converted commit {i+1}/{len(commits_list)}: {github_commit.sha[:7]}")
+                    except Exception as e:
+                        logger.error(f"Error processing commit {github_commit.sha}: {e}")
+                        continue
+                
+                logger.info(f"Successfully converted {len(commits)} commits from default branch")
+                return commits
+                
+            except GithubException as e:
+                logger.error(f"GitHub API error for repo {repo_name}: {e}")
+                raise
+            except Exception as e:
+                logger.error(f"Unexpected error fetching commits from {repo_name}: {e}")
+                raise
+    
+    def get_commits_for_period(self, repo_name: str, hours: int, all_branches: bool = True) -> CommitCollection:
+        """Get commits for the last N hours from all branches"""
+        # Create timezone-aware datetime objects directly
+        end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=hours)
         
-        commits = self.get_commits(repo_name, since=start_time, until=end_time)
+        branch_info = "all branches" if all_branches else "default branch only"
+        logger.info(f"Collecting commits for {repo_name} from {branch_info} "
+                   f"from {start_time.isoformat()} to {end_time.isoformat()}")
+        
+        commits = self.get_commits(repo_name, since=start_time, until=end_time, all_branches=all_branches)
         
         # Calculate totals
         total_additions = sum(c.additions for c in commits)
         total_deletions = sum(c.deletions for c in commits)
         total_files_changed = sum(c.files_count for c in commits)
         
-        return CommitCollection(
+        collection = CommitCollection(
             commits=commits,
             start_time=start_time,
             end_time=end_time,
@@ -217,6 +323,12 @@ class GitHubCollector:
             total_deletions=total_deletions,
             total_files_changed=total_files_changed
         )
+        
+        logger.info(f"Created CommitCollection with {len(commits)} commits, "
+                   f"{total_additions} additions, {total_deletions} deletions, "
+                   f"{total_files_changed} files changed")
+        
+        return collection
     
     def save_commits_to_file(self, commits: CommitCollection, filepath: str):
         """Save commits to JSON file"""

@@ -32,8 +32,12 @@ class PostGenerator:
         try:
             logger.info(f"Generating post for {request.repository} ({request.time_period})")
             
-            # Generate AI content
-            ai_content = await self.claude_client.generate_post_content(request, commits)
+            # Generate AI content - FIXED: removed await and fixed parameters
+            ai_content = self.claude_client.generate_post_content(
+                commits=commits,
+                target_audience=getattr(request, 'target_audience', 'general'),
+                force_template=getattr(request, 'force_template', None)
+            )
             
             if not ai_content:
                 return PostGenerationResponse(
@@ -43,19 +47,21 @@ class PostGenerator:
                 )
             
             # Create post object
+            
+            content_data = ai_content.get("content", {})  # ✅ ДОБАВЬТЕ ЭТУ СТРОКУ
             post = Post(
                 id=str(uuid4()),
-                post_type=self._determine_post_type(ai_content),
-                template=PostTemplate(ai_content.get("template_type", "general")),
+                post_type=self._determine_post_type(content_data),  # ✅ ИЗМЕНЕНО
+                template=self._get_template_from_ai_content(content_data),  # ✅ ИЗМЕНЕНО
                 content=PostContent(
-                    title=ai_content.get("title", "Repository Update"),
-                    summary=ai_content.get("summary", ""),
-                    detailed_explanation=ai_content.get("detailed_explanation", ""),
-                    technical_highlights=ai_content.get("technical_highlights", []),
-                    user_benefits=ai_content.get("user_benefits", []),
-                    code_snippets=ai_content.get("code_snippets", []),
-                    tags=ai_content.get("tags", []),
-                    hashtags=ai_content.get("hashtags", [])
+                    title=content_data.get("title", "Repository Update"),  # ✅ ИЗМЕНЕНО
+                    summary=content_data.get("summary", ""),  # ✅ ИЗМЕНЕНО
+                    detailed_explanation=content_data.get("detailed_explanation", ""),  # ✅ ИЗМЕНЕНО
+                    technical_highlights=content_data.get("technical_highlights", []),  # ✅ ИЗМЕНЕНО
+                    user_benefits=content_data.get("user_benefits", []),  # ✅ ИЗМЕНЕНО
+                    code_snippets=content_data.get("code_snippets", []),  # ✅ ИЗМЕНЕНО
+                    tags=content_data.get("tags", []),  # ✅ ИЗМЕНЕНО
+                    hashtags=content_data.get("hashtags", [])  # ✅ ИЗМЕНЕНО
                 ),
                 metrics=self._calculate_metrics(commits, request.time_period),
                 created_at=datetime.now(),
@@ -68,7 +74,7 @@ class PostGenerator:
             html_content = self.html_generator.generate_html(post)
             post.html_content = html_content
             
-            # Save to file - FIXED path handling
+            # Save to file
             output_path = self._save_post_to_file(post)
             post.output_file_path = output_path
             
@@ -93,13 +99,13 @@ class PostGenerator:
     def _save_post_to_file(self, post: Post) -> str:
         """Save post HTML to file with proper path handling"""
         try:
-            # Create output directory - FIXED path separators
+            # Create output directory
             output_dir = os.path.join(settings.output_dir, post.time_period)
             os.makedirs(output_dir, exist_ok=True)
             
             # Generate filename
             timestamp = post.created_at.strftime("%Y%m%d_%H%M%S")
-            safe_repo = post.repository.replace('/', '_').replace('\\', '_')  # Handle both separators
+            safe_repo = post.repository.replace('/', '_').replace('\\', '_')
             filename = f"{safe_repo}_{post.time_period}_{timestamp}.html"
             
             # Full file path
@@ -130,14 +136,32 @@ class PostGenerator:
         
         return mapping.get(template_type, PostType.GENERAL_UPDATE)
     
-    def _calculate_metrics(self, commits: CommitCollection, time_period: str) -> PostMetrics:
-        """Calculate metrics from commits"""
-        total_additions = sum(commit.stats.additions for commit in commits.commits)
-        total_deletions = sum(commit.stats.deletions for commit in commits.commits)
-        total_files = sum(len(commit.files) for commit in commits.commits)
+    def _get_template_from_ai_content(self, ai_content: Dict[str, Any]) -> PostTemplate:
+        """Get PostTemplate enum from AI content"""
+        template_type = ai_content.get("template_type", "general")
         
-        # Count unique contributors
-        contributors = set(commit.author.login for commit in commits.commits if commit.author)
+        mapping = {
+            "feature": PostTemplate.FEATURE,
+            "bugfix": PostTemplate.BUGFIX,
+            "security": PostTemplate.SECURITY,
+            "performance": PostTemplate.PERFORMANCE,
+            "general": PostTemplate.GENERAL
+        }
+        
+        return mapping.get(template_type, PostTemplate.GENERAL)
+    
+    def _calculate_metrics(self, commits: CommitCollection, time_period: str) -> PostMetrics:
+        """Calculate metrics from commits - FIXED all attribute names"""
+        # FIXED: Use correct attribute names from Commit model
+        total_additions = sum(commit.additions for commit in commits.commits)
+        total_deletions = sum(commit.deletions for commit in commits.commits)
+        total_files = sum(len(commit.files_changed) for commit in commits.commits)
+        
+        # Count unique contributors - FIXED: use username instead of login
+        contributors = set(
+            commit.author.username for commit in commits.commits 
+            if commit.author and commit.author.username
+        )
         
         # Count breaking changes (heuristic)
         breaking_changes = sum(1 for commit in commits.commits 
@@ -172,11 +196,7 @@ class PostGenerator:
                         time_period=time_period
                     )
                     
-                    # Get commits for this period (would need to implement this)
-                    # commits = self._get_commits_for_period(repository, time_period)
-                    # response = self.generate_post(request, commits)
-                    # responses.append(response)
-                    
+                    # Note: This would need actual commit collection logic
                     logger.info(f"Would generate post for {repository} ({time_period})")
                     
                 except Exception as e:
