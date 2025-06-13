@@ -296,11 +296,15 @@ class GitHubCollector:
                 logger.error(f"Unexpected error fetching commits from {repo_name}: {e}")
                 raise
     
-    def get_commits_for_period(self, repo_name: str, hours: int, all_branches: bool = True) -> CommitCollection:
+    def get_commits_for_period(self, repo_name: str, hours: int, all_branches: bool = True, target_date: Optional[str] = None) -> CommitCollection:
         """Get commits for the last N hours from all branches"""
-        # Create timezone-aware datetime objects directly
-        end_time = datetime.now(timezone.utc)
-        start_time = end_time - timedelta(hours=hours)
+        if target_date:
+            target_dt = datetime.strptime(target_date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+            end_time = target_dt + timedelta(days=1)  # End of target day
+            start_time = end_time - timedelta(hours=hours)
+        else:
+            end_time = datetime.now(timezone.utc)
+            start_time = end_time - timedelta(hours=hours)
         
         branch_info = "all branches" if all_branches else "default branch only"
         logger.info(f"Collecting commits for {repo_name} from {branch_info} "
