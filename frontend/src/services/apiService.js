@@ -36,16 +36,21 @@ class ApiService {
   }
 
   // Generate posts for frontend (NEW ENDPOINT)
-  async generatePosts(repository, timePeriod, format = 'posts') {
-    return this.request('/api/generate-posts', {
-      method: 'POST',
-      body: JSON.stringify({
-        repository,
-        time_period: timePeriod,
-        format
-      }),
-    });
+  async generatePosts(repository, timePeriod, format = 'posts', selectedDate = null) {
+  const requestBody = {
+    time_period: timePeriod,
+    format
+  };
+  
+  if (selectedDate) {
+    requestBody.target_date = selectedDate;
   }
+  
+  return this.request('/api/generate-posts', {
+    method: 'POST',
+    body: JSON.stringify(requestBody),
+  });
+}
 
   // Get existing posts data
   async getPostsData(timePeriod) {
