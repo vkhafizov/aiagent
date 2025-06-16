@@ -164,6 +164,25 @@ class ClaudeClient:
             # Try to parse JSON response
             try:
                 parsed_content = json.loads(content)
+                logger.info(f"Claude returned JSON: {list(parsed_content.keys())}")
+                
+                # Check if Claude returned multiple posts
+                if "posts" in parsed_content and isinstance(parsed_content["posts"], list) and len(parsed_content["posts"]) > 0:
+                    logger.info(f"Claude returned {len(parsed_content['posts'])} posts")
+                    return {
+                        "content": parsed_content,  # Return the whole structure
+                        "tokens_used": response.usage.input_tokens + response.usage.output_tokens
+                    }
+                else:
+                    # Single post format - use as-is
+                    logger.info("Claude returned single post format")
+                    return {
+                        "post_type": self._determine_post_type(commits),
+                        "template": self._select_template(self._determine_post_type(commits)),
+                        "content": parsed_content,
+                        "tokens_used": response.usage.input_tokens + response.usage.output_tokens
+                    }
+                    
             except json.JSONDecodeError:
                 logger.warning("Claude didn't return valid JSON, creating fallback response")
                 # Fallback response
@@ -178,43 +197,13 @@ class ClaudeClient:
                     "tags": [commits.repository.split('/')[-1]],
                     "hashtags": ["#coding", "#opensource", "#development"]
                 }
-            
-            # Determine template from AI response
-            template_type = parsed_content.get("template_type", "general")
-            template_mapping = {
-                "feature": PostTemplate.FEATURE,
-                "bugfix": PostTemplate.BUGFIX,
-                "security": PostTemplate.SECURITY,
-                "performance": PostTemplate.PERFORMANCE,
-                "general": PostTemplate.GENERAL
-            }
-            
-            selected_template = template_mapping.get(template_type, PostTemplate.GENERAL)
-            
-            # Override if forced
-            if force_template:
-                selected_template = force_template
-                logger.info(f"Template overridden to: {force_template}")
-            else:
-                logger.info(f"AI selected template: {selected_template} (type: {template_type})")
-            
-            # Determine post type from template
-            post_type_mapping = {
-                PostTemplate.FEATURE: PostType.FEATURE_ANNOUNCEMENT,
-                PostTemplate.BUGFIX: PostType.BUG_FIX_SUMMARY,
-                PostTemplate.SECURITY: PostType.SECURITY_UPDATE,
-                PostTemplate.PERFORMANCE: PostType.PERFORMANCE_IMPROVEMENT,
-                PostTemplate.GENERAL: PostType.GENERAL_UPDATE
-            }
-            
-            post_type = post_type_mapping.get(selected_template, PostType.GENERAL_UPDATE)
-            
-            return {
-                "post_type": post_type,
-                "template": selected_template,
-                "content": parsed_content,
-                "tokens_used": response.usage.input_tokens + response.usage.output_tokens
-            }
+                
+                return {
+                    "post_type": PostType.GENERAL_UPDATE,
+                    "template": PostTemplate.GENERAL,
+                    "content": parsed_content,
+                    "tokens_used": response.usage.input_tokens + response.usage.output_tokens
+                }
             
         except Exception as e:
             logger.error(f"Error generating post content: {e}")
