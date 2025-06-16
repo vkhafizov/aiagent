@@ -262,63 +262,101 @@ async def generate_posts_for_frontend(request: GeneratePostsRequest):
                 branch_stats[branch_name] = 0
             branch_stats[branch_name] += 1
         
-        # Generate post (rest of the method stays the same...)
-        post_request = PostGenerationRequest(
-            repository=request.repository,
-            time_period=request.time_period,
-            target_audience="general"
+        # ПОЛУЧАЕМ RAW ОТВЕТ ОТ CLAUDE НАПРЯМУЮ
+        logger.info("Getting raw response from Claude...")
+        claude_response = claude_client.generate_post_content(
+            commits=commits,
+            target_audience=request.format,
+            force_template=None
         )
         
-        response = await post_generator.generate_post(post_request, commits)
+        logger.info(f"=== CLAUDE RAW RESPONSE ANALYSIS ===")
+        logger.info(f"Claude response type: {type(claude_response)}")
+        logger.info(f"Claude response keys: {list(claude_response.keys()) if isinstance(claude_response, dict) else 'Not a dict'}")
         
-        if not response.success:
-            return PostsResponse(
-                success=False,
-                error_message=response.error_message or "Failed to generate post"
-            )
+        # АНАЛИЗИРУЕМ СОДЕРЖИМОЕ ОТВЕТА CLAUDE
+        claude_content = claude_response.get('content', {})
+        logger.info(f"Claude content type: {type(claude_content)}")
+        logger.info(f"Claude content keys: {list(claude_content.keys()) if isinstance(claude_content, dict) else 'Not a dict'}")
         
-        # Convert backend post to frontend format (same as before...)
         posts_data = []
-        if response.post and response.post.content:
-            post_content = response.post.content
+        
+        if isinstance(claude_content, dict) and 'posts' in claude_content:
+            # CLAUDE ВЕРНУЛ МАССИВ ПОСТОВ - ИСПОЛЬЗУЕМ ИХ
+            claude_posts = claude_content['posts']
+            logger.info(f"Claude returned {len(claude_posts)} posts")
             
-            posts_data = [
-                PostData(
-                    id=f"summary_{response.post.id}",
-                    title=post_content.title,
-                    content=post_content.summary,
-                    hashtags=post_content.hashtags,
-                    timestamp=response.post.created_at.isoformat(),
-                    type="summary"
-                ),
-                PostData(
-                    id=f"technical_{response.post.id}",
-                    title="🔧 Technical Highlights",
-                    content="\n".join([f"• {highlight}" for highlight in post_content.technical_highlights]),
-                    hashtags=post_content.hashtags,
-                    timestamp=response.post.created_at.isoformat(),
-                    type="technical"
-                ),
-                PostData(
-                    id=f"benefits_{response.post.id}",
-                    title="✨ Key Benefits",
-                    content="\n".join([f"✅ {benefit}" for benefit in post_content.user_benefits]),
-                    hashtags=post_content.hashtags,
-                    timestamp=response.post.created_at.isoformat(),
-                    type="benefits"
-                )
-            ]
-            
-            if post_content.code_snippets:
-                snippet = post_content.code_snippets[0]
+            for i, claude_post in enumerate(claude_posts):
+                logger.info(f"Processing Claude post {i+1}: {list(claude_post.keys()) if isinstance(claude_post, dict) else 'Invalid post'}")
+                
+                # ПОЛНЫЙ КОНТЕНТ ТОЛЬКО ОТ CLAUDE БЕЗ ХАРДКОДА
+                full_content = f"""{claude_post.get('summary', '')}
+
+{claude_post.get('detailed_explanation', '')}
+
+🔧 **Technical Highlights:**
+{chr(10).join([f"• {h}" for h in claude_post.get('technical_highlights', [])])}
+
+✨ **User Benefits:**
+{chr(10).join([f"✅ {b}" for b in claude_post.get('user_benefits', [])])}
+
+🏷️ **Tags:** {', '.join(claude_post.get('tags', []))}"""
+
                 posts_data.append(PostData(
-                    id=f"code_{response.post.id}",
-                    title="💻 Code Spotlight",
-                    content=f"{snippet.get('description', 'Code update')}\n\n```{snippet.get('language', 'text')}\n{snippet.get('code', '')}\n```",
+                    id=f"claude_post_{i+1}_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                    title=claude_post.get('title', f'Post {i+1}'),
+                    content=full_content.strip(),
+                    hashtags=claude_post.get('hashtags', []),
+                    timestamp=datetime.now().isoformat(),
+                    type=f"claude_post_{i+1}"
+                ))
+        
+        else:
+            # CLAUDE ВЕРНУЛ СТАРЫЙ ФОРМАТ ИЛИ ОШИБКА
+            logger.info("Claude returned single post format or error - using fallback")
+            
+            # ГЕНЕРИРУЕМ ЧЕРЕЗ POST_GENERATOR КАК РЕЗЕРВ
+            post_request = PostGenerationRequest(
+                repository=request.repository,
+                time_period=request.time_period,
+                target_audience="general"
+            )
+            
+            response = await post_generator.generate_post(post_request, commits)
+            
+            if response.success and response.post and response.post.content:
+                post_content = response.post.content
+                
+                # ОДИН ПОЛНЫЙ ПОСТ ИЗ ДАННЫХ CLAUDE БЕЗ ХАРДКОДА
+                full_content = f"""{post_content.summary}
+
+{post_content.detailed_explanation}
+
+🔧 **Technical Highlights:**
+{chr(10).join([f"• {h}" for h in post_content.technical_highlights])}
+
+✨ **User Benefits:**
+{chr(10).join([f"✅ {b}" for b in post_content.user_benefits])}
+
+📝 **Tags:** {', '.join(post_content.tags)}"""
+
+                posts_data.append(PostData(
+                    id=f"fallback_post_{response.post.id}",
+                    title=post_content.title,
+                    content=full_content.strip(),
                     hashtags=post_content.hashtags,
                     timestamp=response.post.created_at.isoformat(),
-                    type="code"
+                    type="fallback_post"
                 ))
+            else:
+                return PostsResponse(
+                    success=False,
+                    error_message="Failed to generate posts from both Claude and fallback"
+                )
+        
+        logger.info(f"Returning {len(posts_data)} posts to frontend")
+        for i, post in enumerate(posts_data):
+            logger.info(f"Post {i+1}: {post.title[:50]}... ({len(post.content)} chars)")
         
         return PostsResponse(
             success=True,
@@ -330,7 +368,8 @@ async def generate_posts_for_frontend(request: GeneratePostsRequest):
                 "all_branches": True,
                 "branch_statistics": branch_stats,
                 "generated_at": datetime.now().isoformat(),
-                "template_used": response.post.template.value if response.post else None
+                "posts_generated": len(posts_data),
+                "claude_format": "multi_posts" if len(posts_data) > 1 else "single_post"
             }
         )
         
@@ -490,111 +529,6 @@ async def root():
         </body>
     </html>
     """
-
-    """Debug version of generate posts with detailed logging"""
-    
-    try:
-        logger.info(f"Debug: Frontend requesting posts for {request.repository} ({request.time_period})")
-        
-        # Parse time period
-        hours = int(request.time_period.replace('h', ''))
-        
-        # Collect commits
-        commits = github_collector.get_commits_for_period(request.repository, hours, all_branches=True)
-        logger.info(f"Debug: Found {len(commits.commits)} commits")
-        
-        if not commits.commits:
-            return PostsResponse(
-                success=True,
-                posts=[],
-                metadata={
-                    "repository": request.repository,
-                    "time_period": request.time_period,
-                    "commits_count": 0,
-                    "message": f"No commits found in the last {hours} hours across all branches"
-                }
-            )
-        
-        # Generate post
-        post_request = PostGenerationRequest(
-            repository=request.repository,
-            time_period=request.time_period,
-            target_audience="general"
-        )
-        
-        response = await post_generator.generate_post(post_request, commits)
-        logger.info(f"Debug: Post generation success: {response.success}")
-        
-        if not response.success:
-            logger.error(f"Debug: Post generation error: {response.error_message}")
-            return PostsResponse(
-                success=False,
-                error_message=response.error_message or "Failed to generate post"
-            )
-        
-        # Log the generated content
-        if response.post and response.post.content:
-            post_content = response.post.content
-            logger.info(f"Debug: Generated title: {post_content.title}")
-            logger.info(f"Debug: Generated summary: {post_content.summary[:100]}...")
-            logger.info(f"Debug: Technical highlights count: {len(post_content.technical_highlights)}")
-            logger.info(f"Debug: User benefits count: {len(post_content.user_benefits)}")
-        else:
-            logger.error("Debug: No post content generated!")
-        
-        # Convert to frontend format
-        posts_data = []
-        if response.post and response.post.content:
-            post_content = response.post.content
-            
-            posts_data = [
-                PostData(
-                    id=f"summary_{response.post.id}",
-                    title=post_content.title,
-                    content=post_content.summary,
-                    hashtags=post_content.hashtags,
-                    timestamp=response.post.created_at.isoformat(),
-                    type="summary"
-                ),
-                PostData(
-                    id=f"technical_{response.post.id}",
-                    title="🔧 Technical Highlights",
-                    content="\n".join([f"• {highlight}" for highlight in post_content.technical_highlights]),
-                    hashtags=post_content.hashtags,
-                    timestamp=response.post.created_at.isoformat(),
-                    type="technical"
-                ),
-                PostData(
-                    id=f"benefits_{response.post.id}",
-                    title="✨ Key Benefits",
-                    content="\n".join([f"✅ {benefit}" for benefit in post_content.user_benefits]),
-                    hashtags=post_content.hashtags,
-                    timestamp=response.post.created_at.isoformat(),
-                    type="benefits"
-                )
-            ]
-        
-        logger.info(f"Debug: Returning {len(posts_data)} posts to frontend")
-        for i, post in enumerate(posts_data):
-            logger.info(f"Debug: Post {i+1} - Title: {post.title}, Content length: {len(post.content)}")
-        
-        return PostsResponse(
-            success=True,
-            posts=posts_data,
-            metadata={
-                "repository": request.repository,
-                "time_period": request.time_period,
-                "commits_count": len(commits.commits),
-                "generated_at": datetime.now().isoformat()
-            }
-        )
-        
-    except Exception as e:
-        logger.error(f"Debug: Error generating posts: {e}")
-        return PostsResponse(
-            success=False,
-            error_message=f"Internal server error: {str(e)}"
-        )
 
 if __name__ == "__main__":
     import uvicorn
